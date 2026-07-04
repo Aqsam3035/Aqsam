@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aqsam ERP — Professional Suite</title>
+<link rel="manifest" href="./manifest.json"/>
+<meta name="theme-color" content="#0D1B2A"/>
+<link rel="icon" href="./icon-192.png"/>
+<link rel="apple-touch-icon" href="./icon-192.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Aqsam ERP"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;font-size:13px;-webkit-font-smoothing:antialiased}
+:root{--navy:#0D1B2A;--navy2:#1A2F45;--amber:#F59E0B;--amberdk:#B45309;--green:#10B981;--red:#EF4444;--blue:#3B82F6;--slate:#F0F4FA;--bdr:rgba(13,27,42,0.09);--heading:#0D1B2A;--bg:#F0F4FA;--card:#fff;--card2:#fafbfc;--text:#0D1B2A;--muted:#6b7280;--row-hover:#F0F4FA;--inp-bg:#fff;--inp-br:rgba(13,27,42,.15)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes slideIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+#auth{min-height:100vh;background:var(--slate);display:flex;align-items:center;justify-content:center;padding:16px}
+.aw{width:100%;max-width:420px;animation:fadeUp .3s ease}
+.alogo{text-align:center;margin-bottom:22px}
+.alogo-box{width:36px;height:36px;background:var(--navy);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-right:8px}
+.alogo-name{font-size:22px;font-weight:700;color:var(--heading);letter-spacing:-.5px;vertical-align:middle}
+.alogo-sub{font-size:10.5px;color:#9ca3af;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.acard{background:#fff;border-radius:13px;border:.5px solid var(--bdr);padding:22px;margin-bottom:12px}
+.atabs{display:flex;gap:3px;background:var(--slate);border-radius:8px;padding:3px;margin-bottom:17px}
+.atab{flex:1;padding:7px;text-align:center;font-size:12.5px;cursor:pointer;border-radius:6px;color:#6b7280;font-weight:500;transition:all .12s}
+.atab.on{background:#fff;color:var(--heading);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.aerr{background:#fef2f2;border:.5px solid #fca5a5;border-radius:7px;padding:8px 12px;font-size:12px;color:#991b1b;margin-bottom:11px;display:none}
+.afields{display:flex;flex-direction:column;gap:10px}
+.lbl{font-size:11.5px;color:#6b7280;display:block;margin-bottom:4px;font-weight:500}
+.ainp{width:100%;padding:9px 11px;border:1px solid rgba(13,27,42,.15);border-radius:8px;font-size:13px;color:var(--heading);outline:none;font-family:inherit}
+.ainp:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(13,27,42,.07)}
+.abtn{width:100%;padding:10px;border-radius:8px;background:var(--navy);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:2px}
+.abtn:hover{background:var(--navy2)}.abtn:disabled{opacity:.5;cursor:not-allowed}
+.dchips{display:flex;flex-direction:column;gap:6px}
+.dchip{padding:8px 11px;border-radius:8px;border:1px solid rgba(13,27,42,.12);background:#fff;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .1s}
+.dchip:hover{background:var(--slate);border-color:var(--navy)}
+.davt{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+#app{display:none;height:100vh;overflow:hidden}
+#app.on{display:flex}
+#sb{width:220px;min-width:220px;background:var(--navy);display:flex;flex-direction:column;overflow:hidden;transition:width .2s,min-width .2s;flex-shrink:0}
+#sb.col{width:0;min-width:0}
+.sbh{padding:13px 12px 10px;border-bottom:.5px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px;white-space:nowrap;overflow:hidden}
+.sblbox{width:27px;height:27px;background:rgba(245,158,11,.16);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sbname{color:#fff;font-size:13.5px;font-weight:700;letter-spacing:-.3px}
+.sborg{color:rgba(255,255,255,.3);font-size:9px;letter-spacing:.5px;text-transform:uppercase}
+.sbnav{flex:1;overflow-y:auto;padding:8px 0}
+.sbnav::-webkit-scrollbar{width:2px}.sbnav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1)}
+.nsec{color:rgba(255,255,255,.2);font-size:8px;letter-spacing:1.2px;text-transform:uppercase;padding:9px 12px 3px;white-space:nowrap;font-weight:700}
+.ni{display:flex;align-items:center;gap:8px;padding:6px 12px;cursor:pointer;color:rgba(255,255,255,.48);font-size:12px;border-left:2.5px solid transparent;transition:all .1s;user-select:none;white-space:nowrap;font-weight:500}
+.ni:hover{color:rgba(255,255,255,.82);background:rgba(255,255,255,.04)}
+.ni.on{color:var(--amber);background:rgba(245,158,11,.09);border-left-color:var(--amber)}
+.nic{font-size:13px;width:15px;text-align:center;flex-shrink:0}
+.nbadge{background:var(--red);color:#fff;font-size:8px;padding:1px 5px;border-radius:6px;margin-left:auto;font-weight:700}
+.nbadge.am{background:var(--amber)}
+.sbfoot{padding:10px 12px;border-top:.5px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.fav{width:27px;height:27px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:var(--heading);flex-shrink:0}
+#tb{background:var(--card);border-bottom:.5px solid var(--bdr);padding:0 16px;display:flex;align-items:center;gap:9px;height:46px;flex-shrink:0}
+.tbt{font-size:13px;font-weight:700;color:var(--heading)}
+.tbfy{font-size:10.5px;color:#9ca3af;background:var(--slate);padding:3px 9px;border-radius:5px;border:.5px solid var(--bdr);font-weight:500}
+.tbr{margin-left:auto;display:flex;gap:6px;align-items:center}
+.audbadge{font-size:10.5px;background:rgba(16,185,129,.08);color:#064e3b;padding:3px 9px;border-radius:5px;border:.5px solid rgba(16,185,129,.2);display:flex;align-items:center;gap:4px;font-weight:500}
+.pdot{width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 2s infinite}
+.fy-sel{font-size:11px;padding:4px 8px;border:.5px solid var(--bdr);border-radius:6px;background:#fff;color:var(--heading);cursor:pointer;font-family:inherit;font-weight:500}
+.btn{padding:5px 11px;border-radius:6px;font-size:11.5px;font-weight:500;cursor:pointer;border:.5px solid var(--bdr);background:var(--card);color:var(--text);font-family:inherit;transition:background .1s}
+.btn:hover{background:var(--slate)}
+.btnp{background:var(--navy);color:#fff;border-color:var(--navy)}.btnp:hover{background:var(--navy2)}
+.btna{background:var(--amber);color:#fff;border-color:var(--amberdk)}.btna:hover{background:var(--amberdk)}
+.btng{background:rgba(16,185,129,.1);color:#064e3b;border:.5px solid rgba(16,185,129,.25)}
+.btnr{background:rgba(239,68,68,.1);color:#7f1d1d;border:.5px solid rgba(239,68,68,.25)}
+.btnsm{font-size:11px;padding:3px 9px}
+.btnxs{font-size:10.5px;padding:2px 7px}
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+#content{flex:1;overflow-y:auto;padding:16px;background:var(--bg)}
+#content::-webkit-scrollbar{width:4px}#content::-webkit-scrollbar-thumb{background:rgba(13,27,42,.12);border-radius:2px}
+.view{display:none;animation:fadeUp .18s ease}.view.on{display:block}
+.card{background:var(--card);border:.5px solid var(--bdr);border-radius:10px;overflow:hidden;margin-bottom:13px}
+.ch{padding:9px 14px;border-bottom:.5px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;background:var(--card2)}
+.ct{font-size:12.5px;font-weight:700;color:var(--heading)}
+.clink{font-size:11px;color:#9ca3af;cursor:pointer;background:none;border:none;font-family:inherit;font-weight:500}.clink:hover{color:var(--heading)}
+.inp{padding:6px 9px;border:.5px solid rgba(13,27,42,.15);border-radius:6px;font-size:12px;background:var(--inp-bg);color:var(--text);outline:none;font-family:inherit}
+.inp:focus{border-color:var(--navy)}.inplg{padding:8px 10px;font-size:13px}select.inp{cursor:pointer}
+.tag{font-size:10px;padding:2px 7px;border-radius:5px;display:inline-block;white-space:nowrap;font-weight:600}
+.tg{background:rgba(16,185,129,.1);color:#064e3b}
+.ty{background:rgba(245,158,11,.1);color:#78350f}
+.tr{background:rgba(239,68,68,.1);color:#7f1d1d}
+.tb{background:rgba(99,102,241,.1);color:#312e81}
+.tm{background:rgba(107,114,128,.12);color:#374151}
+.gt{width:100%;border-collapse:collapse}
+.gt th{font-size:9.5px;text-transform:uppercase;letter-spacing:.6px;color:#9ca3af;font-weight:700;padding:7px 14px;border-bottom:.5px solid var(--bdr);text-align:left;white-space:nowrap;background:var(--card2)}
+.gt td{padding:8px 14px;border-bottom:.5px solid var(--bdr);font-size:12px;color:var(--text);vertical-align:middle}
+.gt tr:last-child td{border-bottom:none}
+.gt tbody tr{cursor:pointer}.gt tbody tr:hover td{background:var(--row-hover)}
+.mono{font-family:monospace;font-size:10.5px;color:#6b7280}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
+.grn{color:var(--green)}.red{color:var(--red)}.mut{color:#9ca3af;font-size:11px;font-weight:500}
+.kg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.kc{background:var(--card);border:.5px solid var(--bdr);border-radius:10px;padding:13px 14px}
+.kl{font-size:9.5px;color:#9ca3af;text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;font-weight:700}
+.kv{font-size:19px;font-weight:700;color:var(--heading);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kd{font-size:10.5px;margin-top:5px;font-weight:500}
+.fg{display:grid;gap:11px}.fg2{grid-template-columns:1fr 1fr}.fg3{grid-template-columns:1fr 1fr 1fr}
+.fr{display:flex;flex-direction:column;gap:4px}.fr label{font-size:11px;color:#6b7280;font-weight:600}.fr .inp,.fr select,.fr textarea{width:100%}
+textarea.inp{resize:vertical;min-height:58px}
+#mbg{position:fixed;inset:0;background:rgba(0,0,0,.34);z-index:600;display:none;align-items:center;justify-content:center;padding:16px}
+#mbg.on{display:flex}
+.modal{background:var(--card);border-radius:13px;width:100%;max-height:92vh;overflow-y:auto;animation:fadeUp .18s ease;box-shadow:0 20px 60px rgba(0,0,0,.18)}
+.mhd{padding:16px 18px 12px;border-bottom:.5px solid var(--bdr);display:flex;align-items:flex-start;justify-content:space-between;gap:10px;position:sticky;top:0;background:var(--card);z-index:1}
+.mtit{font-size:14px;font-weight:700;color:var(--heading)}.msub{font-size:11px;color:#9ca3af;margin-top:2px}
+.mbody{padding:16px 18px}.mfoot{padding:11px 18px 15px;border-top:.5px solid var(--bdr);display:flex;gap:7px;flex-wrap:wrap}
+#tc{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:6px}
+.toast{background:var(--navy);color:#fff;padding:9px 13px;border-radius:8px;font-size:12px;display:flex;align-items:center;gap:6px;min-width:220px;box-shadow:0 4px 16px rgba(0,0,0,.18);animation:slideIn .2s ease;font-weight:500}
+.tok{background:#064e3b}.ter{background:#7f1d1d}
+.srow{display:flex;padding:8px 14px;border-bottom:.5px solid var(--bdr);font-size:12px;gap:12px}
+.srow:last-child{border-bottom:none}
+.slbl{color:#6b7280;flex:1;font-weight:500}.sval{font-weight:600;color:var(--heading);font-variant-numeric:tabular-nums}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px}
+.vtabs{display:flex;gap:3px;background:var(--slate);border-radius:7px;padding:3px;margin-bottom:13px;width:fit-content}
+.vtab{padding:4px 12px;border-radius:5px;font-size:11.5px;cursor:pointer;color:#6b7280;font-weight:500;transition:all .12s}
+.vtab.on{background:#fff;color:var(--heading);box-shadow:0 1px 3px rgba(0,0,0,.07);border:.5px solid var(--bdr)}
+.pbar{background:var(--slate);border-radius:4px;height:6px;overflow:hidden}
+.pfill{height:100%;border-radius:4px;transition:width .4s ease}
+.banner{border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:13px;font-size:12px;font-weight:500}
+.bwarn{background:rgba(245,158,11,.07);border:.5px solid rgba(245,158,11,.25)}
+.binfo{background:rgba(59,130,246,.07);border:.5px solid rgba(59,130,246,.22)}
+.bok{background:rgba(16,185,129,.07);border:.5px solid rgba(16,185,129,.22)}
+.berr{background:rgba(239,68,68,.07);border:.5px solid rgba(239,68,68,.22)}
+.ef{display:flex;flex-direction:column;gap:2px}
+.el{font-size:9.5px;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.ev{font-size:12px;color:var(--heading);font-weight:500}
+.att-item{background:var(--slate);border:.5px solid var(--bdr);border-radius:6px;padding:7px 10px;display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:11px}
+.fs-co{text-align:center;padding:16px 14px 12px;border-bottom:.5px solid var(--bdr)}
+.fs-co-name{font-size:14px;font-weight:700;color:var(--heading)}
+.fs-co-sub{font-size:11px;color:#6b7280;margin-top:2px}
+.fs-wrap{padding:4px 14px 14px;font-size:11.5px}
+.fs-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#fff;background:var(--navy);padding:6px 10px;border-radius:5px;margin:14px 0 6px}
+.fsg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:0}
+.fsg.hdr{border-bottom:1.5px solid var(--navy);padding-bottom:5px;margin-bottom:2px}
+.fsg.hdr span{font-weight:700;font-size:10.5px;text-align:right;color:var(--heading)}
+.fsg.hdr span:first-child{text-align:left}
+.fsg.row{padding:5px 0;border-bottom:.5px solid rgba(13,27,42,.05)}
+.fsg.row span{text-align:right;font-variant-numeric:tabular-nums}
+.fsg.row span:first-child{text-align:left}
+.fsg.ind span:first-child{padding-left:18px;color:#6b7280;font-size:11px}
+.fsg.sub{padding:6px 0;border-bottom:.5px solid rgba(13,27,42,.18)}
+.fsg.sub span{font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.fsg.sub span:first-child{text-align:left}
+.fsg.tot{padding:8px 10px;margin:4px -14px;background:rgba(13,27,42,.05);border-top:1px solid var(--navy);border-bottom:1px solid var(--navy)}
+.fsg.tot span{font-weight:700;font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:var(--heading)}
+.fsg.tot span:first-child{text-align:left}
+.fsg.grand{padding:9px 10px;margin:6px -14px 0;background:var(--navy);border-radius:0 0 10px 10px}
+.fsg.grand span{font-weight:700;font-size:12px;text-align:right;color:#fff;font-variant-numeric:tabular-nums}
+.fsg.grand span:first-child{text-align:left}
+.fsg.soce{grid-template-columns:2fr 1fr 1fr 1fr 1fr}
+.fs-note{font-size:10px;color:#9ca3af;text-align:center;padding:10px 0 0;margin-top:8px;border-top:.5px solid var(--bdr)}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:.5px solid var(--bdr)}
+.mini-kpi{padding:9px 14px;border-right:.5px solid var(--bdr);border-bottom:.5px solid var(--bdr)}
+.mini-kpi:nth-child(even){border-right:none}
+.mini-kpi:nth-last-child(-n+2){border-bottom:none}
+.mini-lbl{font-size:9.5px;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:4px}
+.mini-val{font-size:14px;font-weight:700;color:var(--heading);font-variant-numeric:tabular-nums}
+@media(max-width:720px){.kg{grid-template-columns:1fr 1fr}.g2,.g3{grid-template-columns:1fr}.fsg{grid-template-columns:2fr 1fr}}
+[data-theme=dark]{--bg:#0f1923;--card:#1a2535;--card2:#1e2d42;--text:#e2e8f0;--muted:#8899aa;--bdr:rgba(255,255,255,0.07);--slate:#131f2e;--row-hover:#1e2d42;--inp-bg:#1e2d42;--inp-br:rgba(255,255,255,.12);--heading:#f0f4f8}
+[data-theme=dark] .acard,[data-theme=dark] .atab.on,[data-theme=dark] .dchip,[data-theme=dark] .fy-sel,[data-theme=dark] .vtab.on{background:var(--card)}
+[data-theme=dark] .aerr{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.35);color:#fca5a5}
+[data-theme=dark] .ainp{color:var(--text);background:var(--inp-bg);border-color:var(--inp-br)}
+[data-theme=dark] #auth{background:var(--bg)}
+[data-theme=dark] .kc,[data-theme=dark] .acard{border-color:var(--bdr)}
+[data-theme=dark] .tg{background:rgba(16,185,129,.16);color:#6ee7b7}
+[data-theme=dark] .ty{background:rgba(245,158,11,.16);color:#fcd34d}
+[data-theme=dark] .tr{background:rgba(239,68,68,.16);color:#fca5a5}
+[data-theme=dark] .tb{background:rgba(99,102,241,.18);color:#a5b4fc}
+[data-theme=dark] .tm{background:rgba(148,163,184,.18);color:#cbd5e1}
+[data-theme=dark] .btng{background:rgba(16,185,129,.14);color:#6ee7b7}
+[data-theme=dark] .btnr{background:rgba(239,68,68,.14);color:#fca5a5}
+[data-theme=dark] .audbadge{background:rgba(16,185,129,.12);color:#6ee7b7}
+body{transition:background .2s,color .2s}
+.card{transition:background .2s,border-color .2s}
+@media print{
+  body{overflow:visible!important;background:#fff!important}
+  #sb,#tb,#mbg,#tc,#api-bar,.btn,.audbadge{display:none!important}
+  #main{margin:0!important;width:100%!important}
+  #content{padding:0!important;overflow:visible!important}
+  .card{box-shadow:none!important;border:none!important}
+}
+</style>
+</head>
+<body>
+<div id="api-bar" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#7f1d1d;color:#fff;font-size:12px;font-weight:600;padding:7px 16px;text-align:center;">⚠ Server offline — using local IndexedDB. Changes are saved locally.</div>
+<div id="auth">
+  <div class="aw">
+    <div class="alogo">
+      <span class="alogo-box"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="#F59E0B"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="rgba(255,255,255,.4)"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="rgba(255,255,255,.4)"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="#10B981"/></svg></span>
+      <span class="alogo-name">Aqsam</span>
+      <div class="alogo-sub">Professional ERP &middot; IFRS &middot; IndexedDB</div>
+    </div>
+    <div class="acard">
+      <div class="atabs"><div class="atab on" onclick="swTab('si')">Sign in</div><div class="atab" onclick="swTab('su')">Create account</div></div>
+      <div class="aerr" id="aerr"></div>
+      <div class="afields">
+        <div id="af-n" style="display:none"><label class="lbl">Full name</label><input class="ainp" id="ai-n" placeholder="Sara Rashid"/></div>
+        <div id="af-o" style="display:none"><label class="lbl">Organisation</label><input class="ainp" id="ai-o" placeholder="Al-Noor Group"/></div>
+        <div id="af-r" style="display:none"><label class="lbl">Role</label><select class="ainp" id="ai-r"><option>CFO</option><option selected>Accountant</option><option>Auditor</option><option>Manager</option><option>Viewer</option></select></div>
+        <div><label class="lbl">Email</label><input class="ainp" id="ai-e" type="email" placeholder="you@company.com" onkeydown="if(event.key==='Enter')asub()"/></div>
+        <div><label class="lbl">Password</label><input class="ainp" id="ai-p" type="password" placeholder="password" onkeydown="if(event.key==='Enter')asub()"/></div>
+        <button class="abtn" id="asbtn" onclick="asub()">Sign in to Aqsam</button>
+      </div>
+    </div>
+    <div class="acard" style="padding:13px 17px">
+      <div style="font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px;font-weight:600">Demo accounts &mdash; data persists in browser</div>
+      <div class="dchips" id="dchips"></div>
+      <div style="text-align:center;margin-top:10px;font-size:10.5px;color:#9ca3af">Password: <strong style="color:#6b7280">demo123</strong></div>
+    </div>
+  </div>
+</div>
+<div id="app">
+  <div id="sb">
+    <div class="sbh"><div class="sblbox"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="#F59E0B"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="rgba(255,255,255,.3)"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="rgba(255,255,255,.3)"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="#10B981"/></svg></div><div><div class="sbname">Aqsam</div><div class="sborg" id="sborg"></div></div></div>
+    <div class="sbnav" id="sbnav"></div>
+    <div class="sbfoot"><div class="fav" id="fav"></div><div style="flex:1;overflow:hidden;min-width:0"><div style="color:#fff;font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis" id="fnam"></div><div style="color:rgba(255,255,255,.35);font-size:9.5px" id="frol"></div></div><button style="background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:12px" onclick="logout()">&#9211;</button></div>
+  </div>
+  <div id="main">
+    <div id="tb">
+      <button class="btn btnsm" style="font-size:15px;padding:3px 7px" onclick="G.sb=!G.sb;document.getElementById('sb').classList.toggle('col',!G.sb)">&#9776;</button>
+      <div class="tbt" id="tbt">Dashboard</div>
+      <div class="tbfy" id="tbfy">FY 2025-26</div>
+      <div class="tbr">
+        <div class="audbadge" id="fxbadge" style="cursor:pointer" onclick="fetchRates()">&#128178; <span id="fxspan">Live Rates</span></div>
+        <select class="fy-sel" id="fysel" onchange="G.fy=this.value;setView(G.view)"><option value="2026">FY 2025-26</option><option value="2025">FY 2024-25</option><option value="2024">FY 2023-24</option></select>
+        <div class="audbadge"><span class="pdot"></span><span id="db-badge">IndexedDB</span></div><div class="audbadge" style="cursor:pointer" onclick="manualSync()">&#8635; Sync</div><div class="audbadge" id="ws-badge" style="color:#9ca3af;cursor:pointer" onclick="_wsConnect()">&#9679; Local only</div>
+        <button class="btn btnsm" id="dmtoggle" onclick="toggleDark()" style="font-size:15px;padding:2px 8px" title="Toggle Dark / Light">&#9790;</button>
+        <button class="btn btnp btnsm" id="tbnew" onclick="showModal('quick')">+ New</button>
+      </div>
+    </div>
+    <div id="content"></div>
+  </div>
+</div>
+<div id="mbg" onclick="cM()">
+  <div class="modal" id="modal" style="max-width:620px" onclick="event.stopPropagation()">
+    <div class="mhd"><div><div class="mtit" id="mtit"></div><div class="msub" id="msub"></div></div><button class="btn btnsm" onclick="cM()">&#10005;</button></div>
+    <div class="mbody" id="mbody"></div>
+    <div class="mfoot" id="mfoot"></div>
+  </div>
+</div>
+<div id="tc"></div>
+<script>
+// ═══════════════════════════════════════════════════════
+// AQSAM ERP — Full Suite | IndexedDB | IFRS | All Modules
+// ═══════════════════════════════════════════════════════
+var G={user:null,view:'dashboard',sb:true,fy:'2026',ls:'',lf:'all',rates:{USD:278,GBP:355,AED:75,EUR:300}};
+
+// ═══════════════════════════════════════════════
+// AQSAM BACKEND BRIDGE v1.0
+// Set API_URL to your server — default: localhost
+// ═══════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════════════
+// WEBSOCKET — real-time sync across all users/devices
+// ══════════════════════════════════════════════════════════════
+var _ws = null;
+var _wsReconnectTimer = null;
+
+function _wsConnect() {
+  if (!API_URL) { var b=document.getElementById('ws-badge'); if(b){b.textContent='○ Local only';b.style.color='#9ca3af';} return; }
+  try {
+    var wsUrl = API_URL.replace(/^http/, 'ws');
+    _ws = new WebSocket(wsUrl);
+
+    _ws.onopen = function() {
+      clearTimeout(_wsReconnectTimer);
+      // Authenticate the WS connection
+      if (_jwt) _ws.send(JSON.stringify({ type: 'auth', token: _jwt }));
+      console.log('[Aqsam WS] Connected');
+      var badge = document.getElementById('ws-badge');
+      if (badge) { badge.textContent = '⚡ Live'; badge.style.color = '#10B981'; }
+    };
+
+    _ws.onmessage = function(e) {
+      var msg = JSON.parse(e.data);
+      if (msg.type === 'auth_ok') return;
+
+      // Handle real-time events
+      if (msg.type === 'txn:new') {
+        var t = msg.data;
+        var local = {id:t.ref,ref:t.ref,desc:t.description,acct:t.account,
+          dr:t.amount<0?Math.abs(t.amount):0,cr:t.amount>0?t.amount:0,
+          date:t.txn_date,status:t.status,by:t.posted_by_name||'Server',att:[],hash:t.hash,fy:t.fy_year,_sid:t.id};
+        S.txns.unshift(local);
+        _showLiveToast('📥 New transaction: ' + t.description);
+        if (G.view==='ledger'||G.view==='dashboard') setView(G.view);
+      }
+      if (msg.type === 'txn:updated') {
+        var t = msg.data;
+        var idx = S.txns.findIndex(function(x){return x.ref===t.ref||x._sid===t.id;});
+        if (idx > -1) { S.txns[idx].status = t.status; if(G.view==='ledger'||G.view==='dashboard') setView(G.view); }
+        _showLiveToast('✅ Transaction updated: ' + (t.ref||''));
+      }
+      if (msg.type === 'invoice:new') { _syncFromServer(); _showLiveToast('📄 New invoice created'); }
+      if (msg.type === 'invoice:updated') { _syncFromServer(); }
+      if (msg.type === 'bill:new') { _syncFromServer(); _showLiveToast('📋 New bill recorded'); }
+      if (msg.type === 'bill:updated') { _syncFromServer(); }
+      if (msg.type === 'txn:voided') {
+        var idx2 = S.txns.findIndex(function(x){return x._sid==msg.data.id;});
+        if (idx2>-1) S.txns[idx2].status = 'void';
+        if (G.view==='ledger') setView('ledger');
+      }
+    };
+
+    _ws.onclose = function() {
+      console.log('[Aqsam WS] Disconnected — reconnecting in 5s');
+      var badge = document.getElementById('ws-badge');
+      if (badge) { badge.textContent = '○ Offline'; badge.style.color = '#9ca3af'; }
+      _wsReconnectTimer = setTimeout(_wsConnect, 5000);
+    };
+
+    _ws.onerror = function() { _ws.close(); };
+
+  } catch(e) { console.warn('[Aqsam WS] Could not connect:', e.message); }
+}
+
+function _showLiveToast(msg) {
+  // Only show if change is from another user (not self)
+  toast('ok', msg);
+}
+
+// ── PDF Export (fully local — no backend required) ─────────────
+function _printWindow(title, bodyHtml) {
+  var w = window.open('', '_blank');
+  if (!w) { toast('er', 'Please allow pop-ups to export PDF.'); return null; }
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>' + title + '</title><style>'
+    + 'body{font-family:system-ui,-apple-system,sans-serif;color:#0D1B2A;padding:32px;font-size:13px}'
+    + 'h1{font-size:19px;margin-bottom:2px} h2{font-size:13px;font-weight:500;color:#6b7280;margin-bottom:18px}'
+    + 'table{width:100%;border-collapse:collapse;margin:14px 0} th,td{padding:7px 9px;text-align:left;border-bottom:1px solid #e5e7eb;font-size:12.5px}'
+    + 'th{color:#6b7280;font-weight:600;font-size:11px;text-transform:uppercase}'
+    + '.right{text-align:right} .tot{font-weight:700;border-top:2px solid #0D1B2A}'
+    + '.hdr{display:flex;justify-content:space-between;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid #0D1B2A}'
+    + '</style></head><body>' + bodyHtml
+    + '<script>window.onload=function(){setTimeout(function(){window.print();},250);};<\/script></body></html>');
+  w.document.close();
+  return w;
+}
+
+function exportInvoicePDF(invId) {
+  if (!invId) { toast('er', 'No invoice selected.'); return; }
+  var i = S.invoices.find(function(x){ return x.id === invId || x._sid === invId; });
+  if (!i) { toast('er', 'Invoice not found.'); return; }
+  var c = co();
+  var tot = i.items.reduce(function(s,x){ return s + x.qty*x.rate; }, 0);
+  var rows = i.items.map(function(x){
+    return '<tr><td>' + x.desc + '</td><td class="right">' + x.qty + '</td><td class="right">' + fmt(x.rate) + '</td><td class="right">' + fmt(x.qty*x.rate) + '</td></tr>';
+  }).join('');
+  var html = '<div class="hdr"><div><h1>' + (c.name || 'Al-Noor Group') + '</h1><h2>Invoice ' + i.id + '</h2></div>'
+    + '<div style="text-align:right"><div><b>Bill To:</b> ' + cn(i.cust) + '</div><div>Date: ' + fmtD(i.date) + '</div><div>Due: ' + fmtD(i.due) + '</div><div>Status: ' + i.status + '</div></div></div>'
+    + '<table><thead><tr><th>Description</th><th class="right">Qty</th><th class="right">Rate</th><th class="right">Amount</th></tr></thead><tbody>' + rows
+    + '<tr class="tot"><td colspan="3" class="right">Total (' + i.cur + ')</td><td class="right">' + fmt(tot) + '</td></tr></tbody></table>'
+    + (i.notes ? '<p style="color:#6b7280;margin-top:12px">' + i.notes + '</p>' : '');
+  _printWindow('Invoice ' + i.id, html);
+  addLog('Exported invoice #' + i.id + ' to PDF', 'exported');
+  toast('ok', 'Invoice opening for print — choose "Save as PDF" in the print dialog.');
+}
+
+function exportPLPDF() {
+  var c = co();
+  var html = '<div class="hdr"><div><h1>' + (c.name || 'Al-Noor Group') + '</h1><h2>Statement of Profit &amp; Loss — FY ' + G.fy + '</h2></div></div>'
+    + vSPNL();
+  _printWindow('P&L FY' + G.fy, html);
+  addLog('Exported P&L FY' + G.fy + ' to PDF', 'exported');
+  toast('ok', 'P&L opening for print — choose "Save as PDF" in the print dialog.');
+}
+
+// ── Send Invoice by Email ─────────────────────────────────────
+async function emailInvoice(invId, toEmail) {
+  if (!invId) { toast('er', 'No invoice selected.'); return; }
+  var email = toEmail || prompt('Send invoice to email address:');
+  if (!email) return;
+  if (API_URL) {
+    var r = await api('POST', '/api/invoices/' + invId + '/send-email', { to: email });
+    if (r && r.ok) { toast('ok', 'Invoice emailed to ' + email + ' ✓'); return; }
+    if (r) { toast('er', r.data.error || 'Email failed'); return; }
+  }
+  // No server (or server unreachable): open the user's own email client with a prefilled invoice summary
+  var i = S.invoices.find(function(x){ return x.id === invId || x._sid === invId; });
+  var tot = i ? i.items.reduce(function(s,x){ return s + x.qty*x.rate; }, 0) : 0;
+  var subject = 'Invoice ' + (i ? i.id : invId) + ' from ' + (co().name || 'Al-Noor Group');
+  var body = i ? ('Dear ' + cn(i.cust) + ',\n\nPlease find your invoice details below:\n\nInvoice: ' + i.id + '\nDate: ' + fmtD(i.date) + '\nDue: ' + fmtD(i.due) + '\nAmount: ' + fmt(tot) + ' ' + i.cur + '\n\nThank you.') : 'Please find attached your invoice.';
+  window.location.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  addLog('Emailed invoice #' + (i ? i.id : invId) + ' via mail client', 'exported');
+  toast('ok', 'Opening your email client to send to ' + email + '…');
+}
+
+
+var API_URL = localStorage.getItem('aqsam_api') || '';
+var _jwt = localStorage.getItem('aqsam_jwt') || '';
+
+async function api(method, path, body) {
+  if (!API_URL) return null; // no server configured — pure local/offline mode, skip the network call entirely
+  try {
+    var r = await fetch(API_URL + path, {
+      method: method,
+      headers: { 'Content-Type':'application/json', 'Authorization': _jwt ? 'Bearer '+_jwt : '' },
+      body: body ? JSON.stringify(body) : undefined
+    });
+    if (r.status === 401) { _jwt=''; localStorage.removeItem('aqsam_jwt'); logout(); return null; }
+    var data = await r.json().catch(function(){return {};});
+    document.getElementById('api-bar').style.display = 'none';
+    return { ok: r.ok, status: r.status, data: data };
+  } catch(e) {
+    document.getElementById('api-bar').style.display = 'block';
+    return null;
+  }
+}
+
+
+// ── INDEXEDDB ────────────────────────────────────────────────
+var DB=null;
+var STORES=['users','txns','invoices','bills','customers','vendors','employees','payrolls','inventory','assets','expenses','projects','journals','audit','settings'];
+
+function initDB(cb){
+  var req=indexedDB.open('AqsamERP2',1);
+  req.onupgradeneeded=function(e){
+    var db=e.target.result;
+    STORES.forEach(function(s){if(!db.objectStoreNames.contains(s))db.createObjectStore(s,{keyPath:'id'});});
+  };
+  req.onsuccess=function(e){DB=e.target.result;seedIfEmpty(cb);};
+  req.onerror=function(){cb();};
+}
+function dbPut(store,obj,cb){
+  if(!DB){if(cb)cb();return;}
+  var tx=DB.transaction(store,'readwrite');
+  tx.objectStore(store).put(obj);
+  tx.oncomplete=function(){if(cb)cb();};
+}
+function dbGetAll(store,cb){
+  if(!DB){cb([]);return;}
+  var req=DB.transaction(store,'readonly').objectStore(store).getAll();
+  req.onsuccess=function(){cb(req.result||[]);};
+  req.onerror=function(){cb([]);};
+}
+function dbDelete(store,id,cb){
+  if(!DB){if(cb)cb();return;}
+  var tx=DB.transaction(store,'readwrite');
+  tx.objectStore(store).delete(id);
+  tx.oncomplete=function(){if(cb)cb();};
+}
+
+// ── IN-MEMORY STORE ──────────────────────────────────────────
+var S={users:[],txns:[],invoices:[],bills:[],customers:[],vendors:[],employees:[],payrolls:[],inventory:[],assets:[],expenses:[],projects:[],journals:[],audit:[],settings:[]};
+
+function save(store,obj,cb){
+  S[store]=S[store].filter(function(x){return x.id!==obj.id;});
+  S[store].push(obj);
+  dbPut(store,obj,cb);
+  if(API_URL&&STORES.indexOf(store)>-1){
+    api('PUT','/api/data/'+store+'/'+encodeURIComponent(obj.id),obj).catch(function(){});
+  }
+}
+function del(store,id,cb){
+  S[store]=S[store].filter(function(x){return x.id!==id;});
+  dbDelete(store,id,cb);
+  if(API_URL&&STORES.indexOf(store)>-1){
+    api('DELETE','/api/data/'+store+'/'+encodeURIComponent(id)).catch(function(){});
+  }
+  setTimeout(function(){setView(G.view);},80);
+}
+function loadAll(cb){
+  var pending=STORES.length;
+  STORES.forEach(function(store){
+    dbGetAll(store,function(rows){S[store]=rows;if(--pending===0)cb();});
+  });
+}
+
+// ── SEED DATA ────────────────────────────────────────────────
+var SEED_USERS=[
+  {id:'u1',name:'Sara Rashid',email:'sara@aqsam.demo',pw:'demo123',role:'CFO',ini:'SR',org:'Al-Noor Group (Pvt.) Ltd.'},
+  {id:'u2',name:'Ahmed Khan',email:'ahmed@aqsam.demo',pw:'demo123',role:'Accountant',ini:'AK',org:'Al-Noor Group (Pvt.) Ltd.'},
+  {id:'u3',name:'Maria Siddiqui',email:'maria@aqsam.demo',pw:'demo123',role:'Auditor',ini:'MS',org:'Al-Noor Group (Pvt.) Ltd.'},
+];
+
+function seedIfEmpty(cb){
+  dbGetAll('users',function(users){
+    if(users.length>0){loadAll(cb);return;}
+    // Fresh install: create an empty company shell only. No demo customers/invoices/etc are seeded —
+    // real accounts start with a clean slate. Demo data is loaded on-demand via loadDemoData() below.
+    var tx=DB.transaction('settings','readwrite');
+    tx.objectStore('settings').put({id:'company',name:'',cur:'PKR',fy:'January'});
+    tx.oncomplete=function(){loadAll(cb);};
+  });
+}
+
+var DEMO_SEEDED_KEY='aqsam_demo_seeded';
+function loadDemoData(cb){
+  if(localStorage.getItem(DEMO_SEEDED_KEY)){cb();return;} // already loaded once — don't overwrite any edits made since
+  var allSeed={
+      users:SEED_USERS,
+      settings:[{id:'company',name:'Al-Noor Group (Pvt.) Ltd.',ntn:'NTN-1234567-8',strn:'STRN-9876543-2',addr:'14-B, Gulberg III, Lahore, Punjab 54660',phone:'+92-42-35761234',email:'accounts@alnoor.pk',website:'www.alnoor.pk',ceo:'Mr. Syed Hassan Ali',cfo:'Sara Rashid',auditor:'Rahman & Co. Chartered Accountants',fy:'April',cur:'PKR',est:'1998',industry:'Manufacturing & Trading'}],
+      customers:[
+        {id:'C001',name:'Al-Noor Textiles Ltd',email:'billing@alnoor.pk',phone:'+92-21-3456789',country:'Pakistan',cur:'PKR',balance:420000,status:'active',credit:10000000,ytd:21000000,since:'2022-03-15',ntn:'NTN-9876543'},
+        {id:'C002',name:'Horizon Traders',email:'accounts@horizon.pk',phone:'+92-42-7654321',country:'Pakistan',cur:'PKR',balance:185000,status:'active',credit:5000000,ytd:8400000,since:'2023-07-01',ntn:'NTN-8765432'},
+        {id:'C003',name:'Gulf Link FZE',email:'ap@gulflink.ae',phone:'+971-4-5551234',country:'UAE',cur:'USD',balance:95000,status:'active',credit:20000000,ytd:37000000,since:'2024-01-20',ntn:'VAT-UAE-123'},
+      ],
+      vendors:[
+        {id:'V001',name:'Shaheen Logistics',email:'billing@shaheen.pk',phone:'+92-51-1234567',balance:215000,status:'active',cat:'Logistics',terms:'Net 30'},
+        {id:'V002',name:'Office Supplies Depot',email:'ap@depot.pk',phone:'+92-21-9876543',balance:38500,status:'pending',cat:'Admin',terms:'Net 15'},
+        {id:'V003',name:'TechPro Solutions',email:'billing@techpro.io',phone:'+92-51-5551234',balance:0,status:'active',cat:'IT',terms:'Net 30'},
+      ],
+      employees:[
+        {id:'EMP-001',name:'Sara Rashid',ni:'12345-6789012-3',email:'sara@alnoor.pk',phone:'+92-300-1111111',dob:'1985-06-15',gender:'Female',dept:'Finance',role:'CFO',join:'2020-03-01',sal:350000,bank:'HBL',acct:'PK36HBLC0110000000123456',taxno:'NTN-9876543-1',eobi:'7001234',status:'active'},
+        {id:'EMP-002',name:'Ahmed Khan',ni:'12345-6789013-4',email:'ahmed@alnoor.pk',phone:'+92-300-2222222',dob:'1990-03-20',gender:'Male',dept:'Finance',role:'Accountant',join:'2021-06-15',sal:120000,bank:'MCB',acct:'PK36MUBAPK13Z007000',taxno:'NTN-9876543-2',eobi:'7001235',status:'active'},
+        {id:'EMP-003',name:'Maria Siddiqui',ni:'12345-6789014-5',email:'maria@alnoor.pk',phone:'+92-300-3333333',dob:'1988-08-10',gender:'Female',dept:'Audit',role:'Auditor',join:'2022-01-10',sal:130000,bank:'UBL',acct:'PK36UBALPK1K0100000',taxno:'NTN-9876543-3',eobi:'7001236',status:'active'},
+        {id:'EMP-004',name:'Kamran Baig',ni:'12345-6789015-6',email:'kamran@alnoor.pk',phone:'+92-300-4444444',dob:'1992-11-05',gender:'Male',dept:'Logistics',role:'Manager',join:'2023-04-20',sal:90000,bank:'ABL',acct:'PK36ABLIPK22A0001234',taxno:'NTN-9876543-4',eobi:'7001237',status:'active'},
+        {id:'EMP-005',name:'Zara Hussain',ni:'12345-6789016-7',email:'zara@alnoor.pk',phone:'+92-300-5555555',dob:'1995-02-14',gender:'Female',dept:'Marketing',role:'Executive',join:'2024-02-01',sal:65000,bank:'HBL',acct:'PK36HBLC0110000000654321',taxno:'NTN-9876543-5',eobi:'7001238',status:'active'},
+      ],
+      invoices:[
+        {id:'INV-0892',cust:'C001',date:'2026-06-19',due:'2026-07-19',items:[{desc:'Consulting Services June',qty:1,rate:420000}],status:'paid',cur:'PKR',att:[],notes:''},
+        {id:'INV-0891',cust:'C002',date:'2026-06-16',due:'2026-07-16',items:[{desc:'Q1 Retainer Fee',qty:1,rate:185000}],status:'sent',cur:'PKR',att:[],notes:'Due on receipt'},
+        {id:'INV-0890',cust:'C003',date:'2026-06-14',due:'2026-07-14',items:[{desc:'Software License Annual',qty:1,rate:95000}],status:'overdue',cur:'PKR',att:[],notes:''},
+        {id:'INV-0889',cust:'C001',date:'2026-05-30',due:'2026-06-30',items:[{desc:'Q4 Service Delivery',qty:1,rate:680000}],status:'paid',cur:'PKR',att:[],notes:''},
+      ],
+      bills:[
+        {id:'BILL-001',vendor:'V001',date:'2026-06-15',due:'2026-07-15',amount:215000,status:'overdue',acct:'6300',ref:'PO-0440',att:[],notes:''},
+        {id:'BILL-002',vendor:'V002',date:'2026-06-17',due:'2026-07-02',amount:38500,status:'pending',acct:'6200',ref:'PO-0441',att:[],notes:''},
+        {id:'BILL-003',vendor:'V003',date:'2026-06-10',due:'2026-07-10',amount:95000,status:'paid',acct:'6400',ref:'PO-0439',att:[],notes:''},
+      ],
+      inventory:[
+        {id:'ITM-001',name:'A4 Paper Ream',sku:'STTN-001',cat:'Stationery',qty:45,cost:850,reorder:20,unit:'ream',status:'ok'},
+        {id:'ITM-002',name:'Printer Toner HP',sku:'PRNT-002',cat:'IT',qty:3,cost:8500,reorder:5,unit:'unit',status:'low'},
+        {id:'ITM-003',name:'Office Chairs',sku:'FURN-001',cat:'Furniture',qty:12,cost:18000,reorder:3,unit:'unit',status:'ok'},
+        {id:'ITM-004',name:'Laptop Dell i7',sku:'IT-004',cat:'IT',qty:0,cost:185000,reorder:2,unit:'unit',status:'out'},
+        {id:'ITM-005',name:'Printer Paper Box',sku:'STTN-005',cat:'Stationery',qty:28,cost:2400,reorder:10,unit:'box',status:'ok'},
+      ],
+      assets:[
+        {id:'FA-001',desc:'Factory Building — Main Plant',cat:'Buildings',acq:'2010-04-01',cost:18000000,life:40,method:'SLM',rate:2.5,adop:10800000,dyr:450000,adcl:11250000,nbv:6750000,loc:'Main Campus, Lahore',status:'active'},
+        {id:'FA-002',desc:'Production Line Machinery A',cat:'Plant & Machinery',acq:'2015-07-01',cost:12000000,life:10,method:'SLM',rate:10,adop:9000000,dyr:1200000,adcl:10200000,nbv:1800000,loc:'Factory Floor 1',status:'active'},
+        {id:'FA-003',desc:'Production Line Machinery B',cat:'Plant & Machinery',acq:'2018-03-01',cost:9500000,life:10,method:'SLM',rate:10,adop:4275000,dyr:950000,adcl:5225000,nbv:4275000,loc:'Factory Floor 2',status:'active'},
+        {id:'FA-004',desc:'Office Furniture & Fittings',cat:'Furniture',acq:'2020-06-01',cost:850000,life:5,method:'SLM',rate:20,adop:680000,dyr:85000,adcl:765000,nbv:85000,loc:'Head Office',status:'active'},
+        {id:'FA-005',desc:'Company Vehicles — Fleet x4',cat:'Vehicles',acq:'2021-04-01',cost:7200000,life:5,method:'SLM',rate:20,adop:2880000,dyr:1440000,adcl:4320000,nbv:2880000,loc:'Motor Pool',status:'active'},
+        {id:'FA-006',desc:'IT Infrastructure & Servers',cat:'IT Equipment',acq:'2022-01-01',cost:3200000,life:4,method:'SLM',rate:25,adop:1200000,dyr:800000,adcl:2000000,nbv:1200000,loc:'IT Room, HO',status:'active'},
+        {id:'FA-007',desc:'Generator — 250KVA',cat:'Plant & Machinery',acq:'2019-09-01',cost:1800000,life:10,method:'SLM',rate:10,adop:1170000,dyr:180000,adcl:1350000,nbv:450000,loc:'Main Campus',status:'active'},
+        {id:'FA-008',desc:'Laptop Computers x20',cat:'IT Equipment',acq:'2023-04-01',cost:2200000,life:3,method:'SLM',rate:33.3,adop:244333,dyr:732660,adcl:976993,nbv:1223007,loc:'Head Office',status:'active'},
+      ],
+      payrolls:[
+        {id:'PR-2026-06',period:'June 2026',date:'2026-06-30',gross:755000,tax:75500,eobi:7550,net:671950,status:'review',approvedBy:null,fy:'2026'},
+        {id:'PR-2026-05',period:'May 2026',date:'2026-05-31',gross:755000,tax:75500,eobi:7550,net:671950,status:'paid',approvedBy:'Sara Rashid',fy:'2026'},
+        {id:'PR-2025-12',period:'December 2025',date:'2025-12-31',gross:720000,tax:72000,eobi:7200,net:640800,status:'paid',approvedBy:'Sara Rashid',fy:'2025'},
+      ],
+      expenses:[
+        {id:'EXP-001',emp:'Ahmed Khan',cat:'Travel',amount:12500,date:'2026-06-18',desc:'Client visit — Karachi',status:'approved',proj:''},
+        {id:'EXP-002',emp:'Zara Hussain',cat:'Marketing',amount:28000,date:'2026-06-15',desc:'Ad campaign — Facebook',status:'pending',proj:''},
+        {id:'EXP-003',emp:'Kamran Baig',cat:'Fuel & Toll',amount:4200,date:'2026-06-14',desc:'Lahore–Islamabad delivery',status:'approved',proj:''},
+      ],
+      projects:[
+        {id:'PRJ-001',name:'ERP Implementation',client:'C001',budget:1200000,spent:840000,status:'active',start:'2026-01-01',end:'2026-09-30',pm:'Ahmed Khan'},
+        {id:'PRJ-002',name:'Q2 Audit Engagement',client:'C003',budget:350000,spent:120000,status:'active',start:'2026-04-01',end:'2026-06-30',pm:'Maria Siddiqui'},
+      ],
+      txns:[
+        {id:'TXN-001',ref:'INV-0892',desc:'Payment — Al-Noor Textiles',acct:'4100',dr:0,cr:420000,date:'2026-06-19',status:'posted',by:'Sara Rashid',att:[],hash:'A8F3C291DE',fy:'2026'},
+        {id:'TXN-002',ref:'PR-JUN-26',desc:'June 2026 Payroll Run',acct:'6010',dr:2840000,cr:0,date:'2026-06-18',status:'review',by:'System',att:[],hash:'B2D9E847A4',fy:'2026'},
+        {id:'TXN-003',ref:'PO-0441',desc:'Office Supplies — Depot Ltd',acct:'6200',dr:38500,cr:0,date:'2026-06-17',status:'pending',by:'Ahmed Khan',att:[],hash:'C7E1B95DF5',fy:'2026'},
+        {id:'TXN-004',ref:'INV-0891',desc:'Q1 Consulting Retainer',acct:'4100',dr:0,cr:185000,date:'2026-06-16',status:'posted',by:'Ahmed Khan',att:[],hash:'D4A2F08988',fy:'2026'},
+        {id:'TXN-005',ref:'PO-0440',desc:'Shaheen Logistics — Freight',acct:'6300',dr:215000,cr:0,date:'2026-06-15',status:'overdue',by:'Ahmed Khan',att:[],hash:'E5B3A11293',fy:'2026'},
+        {id:'TXN-006',ref:'INV-0887',desc:'Product Sales — Gulf Link FZE',acct:'4100',dr:0,cr:1200000,date:'2025-12-10',status:'posted',by:'Sara Rashid',att:[],hash:'F6C4B22304',fy:'2025'},
+        {id:'TXN-007',ref:'PO-0388',desc:'Raw Material Purchase',acct:'5010',dr:980000,cr:0,date:'2025-11-20',status:'posted',by:'Ahmed Khan',att:[],hash:'G7D5A33415',fy:'2025'},
+        {id:'TXN-008',ref:'INV-0820',desc:'Annual Maintenance Revenue',acct:'4200',dr:0,cr:540000,date:'2024-08-15',status:'posted',by:'Sara Rashid',att:[],hash:'H8E6B44526',fy:'2024'},
+      ],
+      journals:[],
+      audit:[
+        {id:'A001',time:'Jun 19 10:42',actor:'Sara Rashid',action:'Posted INV-0892 payment Rs 420,000',type:'posted',hash:'A8F3...2C1'},
+        {id:'A002',time:'Jun 18 04:11',actor:'Ahmed Khan',action:'Modified vendor — Depot Ltd',type:'modified',hash:'E9C2...5B8'},
+        {id:'A003',time:'Jun 18 01:05',actor:'Maria Siddiqui',action:'Approved payroll PR-2026-06',type:'approved',hash:'F1D8...A33'},
+      ],
+  };
+  var stores=Object.keys(allSeed);
+  var pending=stores.length;
+  stores.forEach(function(store){
+    var rows=allSeed[store];
+    if(!rows||!rows.length){if(--pending===0){localStorage.setItem(DEMO_SEEDED_KEY,'1');loadAll(cb);}return;}
+    var tx=DB.transaction(store,'readwrite');
+    var os=tx.objectStore(store);
+    rows.forEach(function(r){os.put(r);});
+    tx.oncomplete=function(){if(--pending===0){localStorage.setItem(DEMO_SEEDED_KEY,'1');loadAll(cb);}};
+  });
+}
+
+// ── FY FINANCIAL DATA ────────────────────────────────────────
+var FY={
+  '2026':{rev_goods:58400000,rev_svcs:12600000,rev_other:1200000,cogs_open:22000000,cogs_purch:32000000,cogs_close:26000000,gross:32200000,dist:3800000,admin:5200000,fin_costs:2100000,oth_inc:480000,pbt:21580000,tax:6042400,pat:15537600,oci_rev:400000,oci_fx:120000,tci:16057600,bs:{ppe_gross:95000000,ppe_dep:42000000,ppe_net:53000000,intang:1200000,invest_nc:3500000,inv:26000000,trade_rec:14200000,adv:1800000,cash:8400000,lt_loan:18000000,def_tax:1800000,st_loan:5000000,trade_pay:9800000,accr:2200000,tax_pay:3100000,sh_cap:20000000,res:5400000,ret_earn:43300000},cf:{dep:5200000,wc:-3200000,tax_pd:-5800000,capex:-4800000,disp:200000,invest:-1000000,loan_rep:-3000000,div:-4000000,open_cash:6600000},soce:{open_ret:31862400,div:-4000000}},
+  '2025':{rev_goods:49800000,rev_svcs:10200000,rev_other:800000,cogs_open:18500000,cogs_purch:27500000,cogs_close:22000000,gross:25800000,dist:3200000,admin:4600000,fin_costs:2400000,oth_inc:350000,pbt:15950000,tax:4466000,pat:11484000,oci_rev:378400,oci_fx:95000,tci:11957400,bs:{ppe_gross:93000000,ppe_dep:36800000,ppe_net:56200000,intang:1400000,invest_nc:2500000,inv:22000000,trade_rec:11800000,adv:1400000,cash:6600000,lt_loan:21000000,def_tax:1600000,st_loan:6000000,trade_pay:8200000,accr:1900000,tax_pay:2400000,sh_cap:20000000,res:4600000,ret_earn:31862400},cf:{dep:4800000,wc:-2400000,tax_pd:-4200000,capex:-3600000,disp:150000,invest:-500000,loan_rep:-2500000,div:-3200000,open_cash:5550000},soce:{open_ret:23578400,div:-3200000}},
+  '2024':{rev_goods:42600000,rev_svcs:8800000,rev_other:600000,cogs_open:15000000,cogs_purch:23500000,cogs_close:18500000,gross:21400000,dist:2700000,admin:4100000,fin_costs:2700000,oth_inc:280000,pbt:12180000,tax:3410400,pat:8769600,oci_rev:308800,oci_fx:80000,tci:9158400,bs:{ppe_gross:90000000,ppe_dep:32000000,ppe_net:58000000,intang:1600000,invest_nc:2000000,inv:18500000,trade_rec:9600000,adv:1200000,cash:5550000,lt_loan:23500000,def_tax:1400000,st_loan:7000000,trade_pay:6800000,accr:1600000,tax_pay:1900000,sh_cap:20000000,res:4200000,ret_earn:23578400},cf:{dep:4400000,wc:-1800000,tax_pd:-3200000,capex:-2800000,disp:100000,invest:-300000,loan_rep:-2000000,div:-2400000,open_cash:5450000},soce:{open_ret:17208800,div:-2400000}}
+};
+
+// ── HELPERS ──────────────────────────────────────────────────
+var E=function(id){return document.getElementById(id);};
+function fmt(n){if(n===undefined||n===null)return '—';var neg=n<0;var s='Rs '+Math.abs(Math.round(n)).toLocaleString('en-PK');return neg?'('+s+')':s;}
+function fmtM(n){return 'Rs '+Math.round(Math.abs(n)/1000000*10)/10+'M';}
+function fmtD(d){return d?new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'—';}
+function uid(p){return (p||'ID')+'-'+Date.now().toString(36).toUpperCase().slice(-6);}
+function today(){return new Date().toISOString().slice(0,10);}
+function cn(id){var c=S.customers.find(function(x){return x.id===id;});return c?c.name:id;}
+function vn(id){var v=S.vendors.find(function(x){return x.id===id;});return v?v.name:id;}
+function co(){return S.settings.find(function(x){return x.id==='company';})||{name:'Al-Noor Group',cfo:'Sara Rashid',auditor:'External Auditor'};}
+function tag(t){var m={posted:'tg',paid:'tg',active:'tg',approved:'tg',ok:'tg',matched:'tg',filed:'tg',review:'tb',sent:'tb',pending:'ty',draft:'ty',low:'ty',overdue:'tr',out:'tr',modified:'ty',exported:'tm',cancelled:'tm'};return '<span class="tag '+(m[t]||'tm')+'">'+(t||'—')+'</span>';}
+function toast(type,msg){var d=document.createElement('div');d.className='toast '+(type==='ok'?'tok':type==='er'?'ter':'');d.innerHTML='<span>'+(type==='ok'?'&#10003;':type==='er'?'&#10005;':'&#8505;')+'</span>'+msg;E('tc').appendChild(d);setTimeout(function(){d.remove();},3500);}
+function addLog(action,type){
+  var a={id:uid('A'),time:new Date().toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),actor:G.user?G.user.name:'System',action:action,type:type||'action',hash:Math.random().toString(16).slice(2,6).toUpperCase()+'...'+Math.random().toString(16).slice(2,5).toUpperCase()};
+  save('audit',a);
+}
+function cf(l,v){return '<div class="ef"><div class="el">'+l+'</div><div class="ev">'+v+'</div></div>';}
+function kpi(l,v,s,dir){return '<div class="kc"><div class="kl">'+l+'</div><div class="kv">'+v+'</div><div class="kd '+(dir==='up'?'grn':dir==='dn'?'red':'mut')+'">'+s+'</div></div>';}
+function gv(id){var e=E(id);return e?e.value:'';}
+function attSection(id){
+  var src=S.invoices.find(function(x){return x.id===id;})||S.bills.find(function(x){return x.id===id;})||S.txns.find(function(x){return x.id===id;});
+  var atts=(src&&src.att)||[];
+  return '<div style="margin-top:13px;padding-top:13px;border-top:.5px solid var(--bdr)"><div style="font-size:11.5px;font-weight:600;color:var(--heading);margin-bottom:7px">Attachments'+(atts.length?' ('+atts.length+')':'')+'</div>'
+    +(atts.length?atts.map(function(a){return '<div class="att-item"><span style="color:var(--amber);font-size:14px">&#128206;</span><span style="flex:1">'+a.name+'</span><span class="mut">'+(a.size||'')+'</span></div>';}).join(''):'<div style="font-size:11px;color:#9ca3af;margin-bottom:8px">No attachments.</div>')
+    +'<button class="btn btnsm" onclick="toast(\'ok\',\'File upload: connect cloud storage for production uploads.\')">+ Attach File</button></div>';
+}
+
+// ── LIVE CURRENCY RATES ──────────────────────────────────────
+function fetchRates(){
+  E('fxspan').textContent='Fetching...';
+  fetch('https://api.exchangerate-api.com/v4/latest/PKR')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.rates){
+        G.rates.USD=Math.round(1/d.rates.USD);
+        G.rates.GBP=Math.round(1/d.rates.GBP);
+        G.rates.AED=Math.round(1/d.rates.AED);
+        G.rates.EUR=Math.round(1/d.rates.EUR);
+        E('fxspan').textContent='1 USD = Rs '+G.rates.USD;
+        toast('ok','Live rates updated');
+      }
+    })
+    .catch(function(){E('fxspan').textContent='1 USD ≈ Rs '+G.rates.USD;});
+}
+
+// ── AUTH ─────────────────────────────────────────────────────
+var authMode='si';
+function swTab(m){authMode=m;document.querySelectorAll('.atab').forEach(function(t,i){t.classList.toggle('on',(i===0&&m==='si')||(i===1&&m==='su'));});['af-n','af-o','af-r'].forEach(function(id){E(id).style.display=m==='su'?'block':'none';});E('ai-p').placeholder=m==='su'?'Min. 6 chars':'password';E('asbtn').textContent=m==='si'?'Sign in to Aqsam':'Create account';E('aerr').style.display='none';}
+function showAerr(m){E('aerr').textContent=m;E('aerr').style.display='block';}
+async function asub(){
+  E('aerr').style.display='none';
+  var email=E('ai-e').value.trim(),pw=E('ai-p').value,btn=E('asbtn');
+  if(authMode==='si'){
+    if(!email||!pw){showAerr('Fill in all fields.');return;}
+    btn.disabled=true;btn.textContent='Signing in...';
+    var r=await api('POST','/api/auth/login',{email:email,password:pw});
+    if(r&&r.ok){
+      _jwt=r.data.token;localStorage.setItem('aqsam_jwt',_jwt);
+      var u=r.data.user;u.ini=u.initials||(u.name||'').split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();u.pw=pw;
+      doLogin(u);
+    }else if(r&&!r.ok){
+      showAerr(r.data.error||'Incorrect email or password.');btn.disabled=false;btn.textContent='Sign in to Aqsam';
+    }else{
+      var u2=S.users.find(function(u){return u.email.toLowerCase()===email.toLowerCase()&&u.pw===pw;});
+      if(u2){toast('ok','Offline mode');doLogin(u2);}
+      else{showAerr('Server unreachable. Try a demo account.');btn.disabled=false;btn.textContent='Sign in to Aqsam';}
+    }
+  }else{
+    var name=E('ai-n').value.trim(),org=E('ai-o').value.trim(),role=E('ai-r').value;
+    if(!name||!email||!pw||!org){showAerr('Fill in all fields.');return;}
+    if(pw.length<6){showAerr('Password must be 6+ characters.');return;}
+    btn.disabled=true;btn.textContent='Creating...';
+    var r2=await api('POST','/api/auth/register',{name:name,email:email,password:pw,role:role,org:org});
+    if(r2&&r2.ok){
+      _jwt=r2.data.token;localStorage.setItem('aqsam_jwt',_jwt);
+      var nu=r2.data.user;nu.ini=nu.initials||name.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();nu.pw=pw;
+      doLogin(nu);
+    }else if(r2&&!r2.ok){
+      showAerr(r2.data.error||'Registration failed.');btn.disabled=false;btn.textContent='Create account';
+    }else{
+      if(S.users.find(function(u){return u.email.toLowerCase()===email.toLowerCase();})){showAerr('Email already registered.');btn.disabled=false;btn.textContent='Create account';return;}
+      var nu2={id:uid('u'),name:name,email:email,pw:pw,role:role,ini:name.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase(),org:org};
+      save('users',nu2);toast('ok','Account created locally (server offline).');doLogin(nu2);
+    }
+  }
+}
+async function demoLogin(id){
+  loadDemoData(function(){
+    var u=S.users.find(function(x){return x.id===id;})||SEED_USERS.find(function(x){return x.id===id;});
+    if(!u)return;
+    api('POST','/api/auth/login',{email:u.email,password:u.pw||'demo123'}).then(function(r){
+      if(r&&r.ok){
+        _jwt=r.data.token;localStorage.setItem('aqsam_jwt',_jwt);
+        var su=r.data.user;su.ini=su.initials||u.ini;su.pw=u.pw||'demo123';
+        doLogin(su);
+      }else{doLogin(u);}
+    });
+  });
+}
+function doLogin(u){
+  G.user=u;
+  localStorage.setItem('aqsam_sess',JSON.stringify({id:u.id,ts:Date.now()}));
+  E('auth').style.display='none';E('app').classList.add('on');
+  E('sborg').textContent=u.org||co().name||'Aqsam';
+  E('fav').textContent=u.ini||u.initials||'U';
+  E('fnam').textContent=u.name;E('frol').textContent=u.role;
+  buildNav();setView('dashboard');fetchRates();
+  toast('ok','Welcome, '+u.name.split(' ')[0]+'!');
+  _syncFromServer();
+  _wsConnect();
+}
+async function _syncFromServer(){
+  var r=await api('GET','/api/data');
+  if(r&&r.ok&&r.data){
+    STORES.forEach(function(store){
+      if(Array.isArray(r.data[store])&&r.data[store].length){
+        S[store]=r.data[store];
+        var tx=DB.transaction(store,'readwrite'),os=tx.objectStore(store);
+        r.data[store].forEach(function(rec){os.put(rec);});
+      }
+    });
+  }
+  try{setView(G.view);}catch(e){}
+}
+function logout(){
+  _jwt='';localStorage.removeItem('aqsam_jwt');localStorage.removeItem('aqsam_sess');
+  if(_ws){_ws.onclose=null;_ws.close();}
+  clearTimeout(_wsReconnectTimer);
+  G.user=null;E('app').classList.remove('on');E('auth').style.display='flex';
+}
+function tryAutoLogin(){
+  var sess=localStorage.getItem('aqsam_sess');
+  if(!sess)return;
+  try{var s=JSON.parse(sess);if(Date.now()-s.ts>86400000*7){localStorage.removeItem('aqsam_sess');return;}var u=S.users.find(function(x){return x.id===s.id;});if(u)doLogin(u);}catch(e){}
+}
+
+// ── NAV ──────────────────────────────────────────────────────
+var NAV=[
+  {sec:'Overview'},{key:'dashboard',icon:'&#8862;',label:'Dashboard'},
+  {sec:'Financial Statements (IFRS)'},
+  {key:'sofp',icon:'&#9636;',label:'Statement of Financial Position'},
+  {key:'spnl',icon:'&#9637;',label:'Statement of Profit & Loss &#8595;PDF'},
+  {key:'soce',icon:'&#9638;',label:'Statement of Changes in Equity'},
+  {key:'socf',icon:'&#9639;',label:'Statement of Cash Flows'},
+  {key:'prior',icon:'&#9640;',label:'Prior Year Analysis'},
+  {sec:'Accounting'},
+  {key:'ledger',icon:'&#9776;',label:'General Ledger'},
+  {key:'journals',icon:'&#9998;',label:'Journal Entries'},
+  {key:'coa',icon:'&#9672;',label:'Chart of Accounts'},
+  {key:'far',icon:'&#9635;',label:'Fixed Asset Register'},
+  {sec:'Sales'},
+  {key:'invoices',icon:'&#9671;',label:'Invoices & AR'},
+  {key:'customers',icon:'&#9426;',label:'Customers'},
+  {sec:'Purchases'},
+  {key:'bills',icon:'&#9672;',label:'Bills & AP'},
+  {key:'vendors',icon:'&#9673;',label:'Vendors'},
+  {sec:'Operations'},
+  {key:'inventory',icon:'&#9638;',label:'Inventory'},
+  {key:'projects',icon:'&#9685;',label:'Projects & Jobs'},
+  {key:'expenses',icon:'&#8853;',label:'Expense Claims'},
+  {sec:'People'},
+  {key:'employees',icon:'&#9719;',label:'Employees & HR'},
+  {key:'payroll',icon:'&#8853;',label:'Payroll Engine'},
+  {sec:'System'},
+  {key:'audit',icon:'&#9672;',label:'Audit Trail'},
+  {key:'company',icon:'&#9728;',label:'Company Info'},
+  {key:'settings',icon:'&#9881;',label:'Settings'},
+];
+var VLBLS={dashboard:'Dashboard',sofp:'Statement of Financial Position',spnl:'Statement of Profit & Loss',soce:'Statement of Changes in Equity',socf:'Statement of Cash Flows',prior:'Prior Year Analysis',ledger:'General Ledger',journals:'Journal Entries',coa:'Chart of Accounts',far:'Fixed Asset Register',invoices:'Invoices & AR',customers:'Customers',bills:'Bills & AP',vendors:'Vendors',inventory:'Inventory',projects:'Projects & Jobs',expenses:'Expense Claims',employees:'Employees & HR',payroll:'Payroll Engine',audit:'Audit Trail',company:'Company Information',settings:'Settings'};
+
+function buildNav(){
+  E('sbnav').innerHTML=NAV.map(function(n){
+    if(n.sec)return '<div class="nsec">'+n.sec+'</div>';
+    return '<div class="ni'+(G.view===n.key?' on':'')+'" data-v="'+n.key+'" onclick="setView(\''+n.key+'\')">'+'<span class="nic">'+n.icon+'</span><span style="flex:1">'+n.label+'</span></div>';
+  }).join('');
+}
+function setView(v){
+  G.view=v;
+  document.querySelectorAll('.ni').forEach(function(n){n.classList.toggle('on',n.dataset.v===v);});
+  E('tbt').textContent=VLBLS[v]||v;
+  var fy=parseInt(G.fy);E('tbfy').textContent='FY '+(fy-1)+'/'+fy.toString().slice(2);
+  E('fysel').value=G.fy;
+  E('content').innerHTML='<div class="view on">'+renderView(v)+'</div>';
+}
+function renderView(v){
+  var fn={dashboard:vDash,sofp:vSOFP,spnl:vSPNL,soce:vSOCE,socf:vSOCF,prior:vPrior,ledger:vLedger,journals:vJournals,coa:vCOA,far:vFAR,invoices:vInvoices,customers:vCusts,bills:vBills,vendors:vVends,inventory:vInv,projects:vProj,expenses:vExp,employees:vEmps,payroll:vPayroll,audit:vAudit,company:vCompany,settings:vSettings};
+  return fn[v]?fn[v]():'<div style="padding:34px;text-align:center;color:#9ca3af">Coming soon</div>';
+}
+function openM(title,sub,body,foot){E('mtit').textContent=title;E('msub').textContent=sub;E('mbody').innerHTML=body;E('mfoot').innerHTML=foot||'<button class="btn" onclick="cM()">Close</button>';E('mbg').classList.add('on');}
+function cM(){E('mbg').classList.remove('on');}
+
+E('dchips').innerHTML=SEED_USERS.map(function(u){return '<div class="dchip" onclick="demoLogin(\''+u.id+'\')"><div class="davt">'+u.ini+'</div><div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--heading)">'+u.name+'</div><div style="font-size:10.5px;color:#6b7280">'+u.role+'</div></div><span style="color:#9ca3af">&#8594;</span></div>';}).join('');
+
+function svgBarChart(labs,revs,exps){
+  var w=520,h=210,padL=46,padB=28,padT=14;
+  var maxV=Math.max.apply(null,revs.concat(exps));
+  if(maxV<=0)maxV=1;
+  var plotW=w-padL-12,plotH=h-padT-padB;
+  var groupW=plotW/labs.length;
+  var barW=Math.min(34,groupW*0.32);
+  var gap=barW*0.18;
+  var svg='<svg width="100%" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="display:block;font-family:system-ui">';
+  // gridlines + y labels
+  var steps=4;
+  for(var s=0;s<=steps;s++){
+    var val=maxV*s/steps;
+    var y=padT+plotH-(val/maxV)*plotH;
+    svg+='<line x1="'+padL+'" y1="'+y+'" x2="'+(w-8)+'" y2="'+y+'" stroke="var(--bdr,#e5e7eb)" stroke-width="1"/>';
+    svg+='<text x="'+(padL-6)+'" y="'+(y+3)+'" text-anchor="end" font-size="9" fill="var(--muted,#9ca3af)">'+Math.round(val).toLocaleString()+'</text>';
+  }
+  labs.forEach(function(lab,i){
+    var cx=padL+groupW*i+groupW/2;
+    var rH=(revs[i]/maxV)*plotH;
+    var eH=(exps[i]/maxV)*plotH;
+    var rx=cx-barW-gap/2;
+    var ex=cx+gap/2;
+    var ry=padT+plotH-rH;
+    var ey=padT+plotH-eH;
+    svg+='<rect x="'+rx+'" y="'+ry+'" width="'+barW+'" height="'+Math.max(rH,1)+'" rx="3" fill="#10B981"/>';
+    svg+='<rect x="'+ex+'" y="'+ey+'" width="'+barW+'" height="'+Math.max(eH,1)+'" rx="3" fill="#EF4444"/>';
+    svg+='<text x="'+cx+'" y="'+(h-8)+'" text-anchor="middle" font-size="10" fill="var(--muted,#6b7280)">'+lab+'</text>';
+  });
+  svg+='</svg>';
+  return svg;
+}
+
+function svgDonutChart(labels,values,colors,centerLabel,centerValue){
+  var total=values.reduce(function(a,b){return a+b;},0)||1;
+  var cx=90,cy=90,r=78,ir=50;
+  var svg='<svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0">';
+  var ang=-Math.PI/2;
+  values.forEach(function(v,i){
+    if(v<=0)return;
+    var frac=v/total;
+    var a2=ang+frac*Math.PI*2;
+    var x1=cx+r*Math.cos(ang),y1=cy+r*Math.sin(ang);
+    var x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
+    var xi1=cx+ir*Math.cos(ang),yi1=cy+ir*Math.sin(ang);
+    var xi2=cx+ir*Math.cos(a2),yi2=cy+ir*Math.sin(a2);
+    var large=frac>0.5?1:0;
+    svg+='<path d="M '+xi1+' '+yi1+' L '+x1+' '+y1+' A '+r+' '+r+' 0 '+large+' 1 '+x2+' '+y2+' L '+xi2+' '+yi2+' A '+ir+' '+ir+' 0 '+large+' 0 '+xi1+' '+yi1+' Z" fill="'+colors[i]+'"/>';
+    ang=a2;
+  });
+  if(centerLabel){
+    svg+='<text x="'+cx+'" y="'+(cy-6)+'" text-anchor="middle" font-size="10" fill="var(--muted,#9ca3af)" font-family="system-ui">'+centerLabel+'</text>';
+    svg+='<text x="'+cx+'" y="'+(cy+13)+'" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text,#0D1B2A)" font-family="system-ui">'+(centerValue||'')+'</text>';
+  }
+  svg+='</svg>';
+  var legend='<div style="display:flex;flex-direction:column;gap:9px;flex:1;min-width:0">';
+  labels.forEach(function(lab,i){
+    legend+='<div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:10px;height:10px;border-radius:3px;background:'+colors[i]+';flex-shrink:0;display:inline-block"></span><span style="flex:1;color:var(--text,#374151);font-weight:500">'+lab+'</span><span style="color:var(--text,#0D1B2A);font-weight:700;font-variant-numeric:tabular-nums">'+fmtM(values[i]*1000)+'</span></div>';
+  });
+  legend+='</div>';
+  return '<div style="display:flex;align-items:center;gap:20px">'+svg+legend+'</div>';
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────
+function vDash(){
+  if(!FY||!G.fy||!FY[G.fy]){return '<div style="padding:40px;text-align:center;color:#9ca3af">Loading dashboard data...</div>';}
+  var d=FY[G.fy];
+  var rev=d.rev_goods+d.rev_svcs+d.rev_other;
+  var gpm=Math.round(d.gross/rev*100),npm=Math.round(d.pat/rev*100);
+  var yrs=['2024','2025','2026'],labs=['FY23/24','FY24/25','FY25/26'];
+  var revs=yrs.map(function(y){var f=FY[y];return f.rev_goods+f.rev_svcs+f.rev_other;});
+  var exps=yrs.map(function(y){var f=FY[y];return f.cogs_open+f.cogs_purch-f.cogs_close+f.dist+f.admin+f.fin_costs-f.oth_inc;});
+  var nps=yrs.map(function(y){return FY[y].pat;});
+  var overdue=S.bills.filter(function(b){return b.status==='overdue';}).length+S.invoices.filter(function(i){return i.status==='overdue';}).length;
+
+  var spW=280,spH=80;
+  var spMax=Math.max.apply(null,nps);
+  var spMin=Math.min.apply(null,nps);
+  var spRange=spMax-spMin||1;
+  var spPts=nps.map(function(v,i){return {x:20+(i/(nps.length-1))*(spW-40),y:12+((spMax-v)/spRange)*(spH-28)};});
+  var sp='<svg width="100%" viewBox="0 0 '+spW+' '+spH+'" xmlns="http://www.w3.org/2000/svg" style="display:block">';
+  var area='M '+spPts[0].x+' '+(spH-6);
+  spPts.forEach(function(p){area+=' L '+p.x+' '+p.y;});
+  area+=' L '+spPts[spPts.length-1].x+' '+(spH-6)+' Z';
+  sp+='<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10B981" stop-opacity=".25"/><stop offset="100%" stop-color="#10B981" stop-opacity="0"/></linearGradient></defs>';
+  sp+='<path d="'+area+'" fill="url(#sg)"/>';
+  sp+='<path d="M '+spPts.map(function(p){return p.x+' '+p.y;}).join(' L ')+'" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+  spPts.forEach(function(p,i){
+    sp+='<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="#10B981" stroke="#fff" stroke-width="1.5"/>';
+    sp+='<text x="'+p.x+'" y="'+(p.y-8)+'" text-anchor="middle" font-size="9" fill="#0D1B2A" font-weight="700" font-family="system-ui">'+fmtM(nps[i])+'</text>';
+    sp+='<text x="'+p.x+'" y="'+(spH-1)+'" text-anchor="middle" font-size="8" fill="#9ca3af" font-family="system-ui">'+labs[i]+'</text>';
+  });
+  sp+='</svg>';
+
+  var html='';
+  html+='<div class="kg">';
+  html+=kpi('Revenue FY'+G.fy.slice(2),fmtM(rev),'+12.4% vs prior year','up');
+  html+=kpi('Gross Profit',fmtM(d.gross),'Margin: '+gpm+'%','up');
+  html+=kpi('Net Profit',fmtM(d.pat),'Margin: '+npm+'%','up');
+  html+=kpi('Alerts',overdue+' overdue',overdue>0?'needs attention':'all clear',overdue>0?'dn':'up');
+  html+='</div>';
+
+  var barSVG=svgBarChart(labs,revs.map(function(v){return Math.round(v/1000);}),exps.map(function(v){return Math.round(v/1000);}));
+  var cogs=d.cogs_open+d.cogs_purch-d.cogs_close;
+  var distK=Math.round(d.dist/1000),adminK=Math.round(d.admin/1000),finK=Math.round(d.fin_costs/1000),taxK=Math.round(d.tax/1000);
+  var donutSVG=svgDonutChart(
+    ['Distribution','Admin','Finance','Tax'],
+    [distK,adminK,finK,taxK],
+    ['var(--navy,#0D1B2A)','var(--amber,#F59E0B)','var(--green,#10B981)','var(--blue,#3B82F6)'],
+    'Expenses','Rs '+(Math.round((distK+adminK+finK+taxK)/100)/10)+'M'
+  );
+  var ebit=d.pbt+d.fin_costs;
+  var taxRate=Math.round(d.tax/d.pbt*100);
+  html+='<div class="g2" style="margin-bottom:13px">';
+  html+='<div class="card"><div class="ch"><span class="ct">3-Year Revenue &middot; Gross Profit &middot; Net Profit</span></div><div style="padding:16px">'+barSVG+'</div></div>';
+  html+='<div class="card"><div class="ch"><span class="ct">Expense Mix FY'+G.fy.slice(2)+'</span></div><div style="padding:16px">'+donutSVG+'</div>'
+    +'<div class="mini-grid" style="display:grid;grid-template-columns:1fr 1fr;border-top:.5px solid var(--bdr)">'
+    +'<div style="padding:11px 16px;border-right:.5px solid var(--bdr);border-bottom:.5px solid var(--bdr)"><div class="mut" style="text-transform:uppercase;font-size:10px;letter-spacing:.5px">GP Margin</div><div style="font-size:17px;font-weight:700;color:var(--text);margin-top:3px">'+gpm+'%</div></div>'
+    +'<div style="padding:11px 16px;border-bottom:.5px solid var(--bdr)"><div class="mut" style="text-transform:uppercase;font-size:10px;letter-spacing:.5px">NP Margin</div><div style="font-size:17px;font-weight:700;color:var(--text);margin-top:3px">'+npm+'%</div></div>'
+    +'<div style="padding:11px 16px;border-right:.5px solid var(--bdr)"><div class="mut" style="text-transform:uppercase;font-size:10px;letter-spacing:.5px">EBIT</div><div style="font-size:17px;font-weight:700;color:var(--text);margin-top:3px">'+fmtM(ebit)+'</div></div>'
+    +'<div style="padding:11px 16px"><div class="mut" style="text-transform:uppercase;font-size:10px;letter-spacing:.5px">Tax Rate</div><div style="font-size:17px;font-weight:700;color:var(--text);margin-top:3px">'+taxRate+'%</div></div>'
+    +'</div></div>';
+  html+='</div>';
+
+  html+='<div class="g2">';
+  html+='<div class="card"><div class="ch"><span class="ct">Net Profit Trend</span><span class="mut">3 Years</span></div><div style="padding:14px 14px 8px">'+sp+'</div></div>';
+  html+='<div class="card"><div class="ch"><span class="ct">Balance Sheet Snapshot</span><button class="clink" data-nav="sofp" onclick="setView(this.dataset.nav)">Full Statement &rarr;</button></div>';
+  html+='<div class="srow"><span class="slbl" style="font-weight:700">Total Assets</span><span class="sval">'+fmtM(d.bs.ppe_net+d.bs.intang+d.bs.invest_nc+d.bs.inv+d.bs.trade_rec+d.bs.adv+d.bs.cash)+'</span></div>';
+  html+='<div class="srow"><span class="slbl">Non-current Assets</span><span class="sval">'+fmtM(d.bs.ppe_net+d.bs.intang+d.bs.invest_nc)+'</span></div>';
+  html+='<div class="srow"><span class="slbl">Current Assets</span><span class="sval">'+fmtM(d.bs.inv+d.bs.trade_rec+d.bs.adv+d.bs.cash)+'</span></div>';
+  html+='<div class="srow"><span class="slbl" style="font-weight:700">Total Equity</span><span class="sval grn">'+fmtM(d.bs.sh_cap+d.bs.res+d.bs.ret_earn)+'</span></div>';
+  html+='<div class="srow"><span class="slbl">Total Liabilities</span><span class="sval red">'+fmtM(d.bs.lt_loan+d.bs.def_tax+d.bs.st_loan+d.bs.trade_pay+d.bs.accr+d.bs.tax_pay)+'</span></div>';
+  html+='<div class="srow"><span class="slbl">1 USD (live)</span><span class="sval">Rs '+G.rates.USD+'</span></div>';
+  html+='</div></div>';
+
+  return html;
+}
+
+
+// ── STATEMENT OF FINANCIAL POSITION ───────────────────────────
+function fyT(){
+  var y=parseInt(G.fy);
+  return [String(y),String(y-1),String(y-2)];
+}
+function fsTH(){
+  var t=fyT();
+  return '<div class="fsg hdr"><span></span><span>FY '+(parseInt(t[0])-1)+'/'+t[0].slice(2)+'</span><span>FY '+(parseInt(t[1])-1)+'/'+t[1].slice(2)+'</span><span>FY '+(parseInt(t[2])-1)+'/'+t[2].slice(2)+'</span></div>';
+}
+function fsRow(label,v1,v2,v3,indent){
+  var cls='fsg row'+(indent?' ind':'');
+  return '<div class="'+cls+'"><span>'+label+'</span><span>'+fmt(v1)+'</span><span>'+fmt(v2)+'</span><span>'+fmt(v3)+'</span></div>';
+}
+function fsSub(label,v1,v2,v3){
+  return '<div class="fsg sub"><span>'+label+'</span><span>'+fmt(v1)+'</span><span>'+fmt(v2)+'</span><span>'+fmt(v3)+'</span></div>';
+}
+function fsTot(label,v1,v2,v3){
+  return '<div class="fsg tot"><span>'+label+'</span><span>'+fmt(v1)+'</span><span>'+fmt(v2)+'</span><span>'+fmt(v3)+'</span></div>';
+}
+function fsGrand(label,v1,v2,v3){
+  return '<div class="fsg grand"><span>'+label+'</span><span>'+fmt(v1)+'</span><span>'+fmt(v2)+'</span><span>'+fmt(v3)+'</span></div>';
+}
+function fsHeader(title,sub){
+  var c=co();
+  return '<div class="fs-co"><div class="fs-co-name">'+(c.name||'Al-Noor Group')+'</div><div class="fs-co-sub">'+title+'</div><div class="fs-co-sub">'+sub+'</div></div>';
+}
+function fsNote(text){
+  return '<div class="fs-note">'+text+'</div>';
+}
+function fsExportBtn(){
+  return '<button class="btn btnsm" onclick="window.print()">&#8595; Export PDF</button>';
+}
+
+function vSOFP(){
+  var t=fyT(),bs=t.map(function(yr){return FY[yr]?FY[yr].bs:null;});
+  if(!bs[0])return '<div style="padding:22px;text-align:center;color:#9ca3af">No data for '+G.fy+'</div>';
+  function bv(i,k){return bs[i]?bs[i][k]:null;}
+  function nca(i){var b=bs[i];return b?b.ppe_net+b.intang+b.invest_nc:null;}
+  function ca(i){var b=bs[i];return b?b.inv+b.trade_rec+b.adv+b.cash:null;}
+  function eq(i){var b=bs[i];return b?b.sh_cap+b.res+b.ret_earn:null;}
+  function ncl(i){var b=bs[i];return b?b.lt_loan+b.def_tax:null;}
+  function cl(i){var b=bs[i];return b?b.st_loan+b.trade_pay+b.accr+b.tax_pay:null;}
+  function tl(i){return ncl(i)!==null?ncl(i)+cl(i):null;}
+  function ta(i){return nca(i)!==null?nca(i)+ca(i):null;}
+  return '<div class="card"><div class="ch"><span class="ct">Statement of Financial Position</span>'+fsExportBtn()+'</div>'
+    +fsHeader('STATEMENT OF FINANCIAL POSITION','As at 30 June '+t[0]+' | Per IAS 1 | All amounts in PKR')
+    +'<div class="fs-wrap">'+fsTH()
+    +'<div class="fs-title">NON-CURRENT ASSETS</div>'
+    +fsRow('Property, Plant & Equipment — cost',bv(0,'ppe_gross'),bv(1,'ppe_gross'),bv(2,'ppe_gross'),1)
+    +fsRow('Less: Accumulated depreciation',-bv(0,'ppe_dep'),-bv(1,'ppe_dep'),-bv(2,'ppe_dep'),1)
+    +fsSub('Net PPE',bv(0,'ppe_net'),bv(1,'ppe_net'),bv(2,'ppe_net'))
+    +fsRow('Intangible Assets',bv(0,'intang'),bv(1,'intang'),bv(2,'intang'),1)
+    +fsRow('Long-term Investments',bv(0,'invest_nc'),bv(1,'invest_nc'),bv(2,'invest_nc'),1)
+    +fsTot('Total Non-Current Assets',nca(0),nca(1),nca(2))
+    +'<div class="fs-title">CURRENT ASSETS</div>'
+    +fsRow('Inventories',bv(0,'inv'),bv(1,'inv'),bv(2,'inv'),1)
+    +fsRow('Trade Receivables',bv(0,'trade_rec'),bv(1,'trade_rec'),bv(2,'trade_rec'),1)
+    +fsRow('Advances & Prepayments',bv(0,'adv'),bv(1,'adv'),bv(2,'adv'),1)
+    +fsRow('Cash & Bank Balances',bv(0,'cash'),bv(1,'cash'),bv(2,'cash'),1)
+    +fsTot('Total Current Assets',ca(0),ca(1),ca(2))
+    +fsGrand('TOTAL ASSETS',ta(0),ta(1),ta(2))
+    +'<div class="fs-title" style="margin-top:14px">EQUITY</div>'
+    +fsRow('Ordinary Share Capital',bv(0,'sh_cap'),bv(1,'sh_cap'),bv(2,'sh_cap'),1)
+    +fsRow('Other Reserves',bv(0,'res'),bv(1,'res'),bv(2,'res'),1)
+    +fsRow('Retained Earnings',bv(0,'ret_earn'),bv(1,'ret_earn'),bv(2,'ret_earn'),1)
+    +fsTot('Total Equity',eq(0),eq(1),eq(2))
+    +'<div class="fs-title">NON-CURRENT LIABILITIES</div>'
+    +fsRow('Long-term Borrowings',bv(0,'lt_loan'),bv(1,'lt_loan'),bv(2,'lt_loan'),1)
+    +fsRow('Deferred Tax Liability',bv(0,'def_tax'),bv(1,'def_tax'),bv(2,'def_tax'),1)
+    +fsTot('Total Non-Current Liabilities',ncl(0),ncl(1),ncl(2))
+    +'<div class="fs-title">CURRENT LIABILITIES</div>'
+    +fsRow('Short-term Borrowings',bv(0,'st_loan'),bv(1,'st_loan'),bv(2,'st_loan'),1)
+    +fsRow('Trade & Other Payables',bv(0,'trade_pay'),bv(1,'trade_pay'),bv(2,'trade_pay'),1)
+    +fsRow('Accrued Liabilities',bv(0,'accr'),bv(1,'accr'),bv(2,'accr'),1)
+    +fsRow('Income Tax Payable',bv(0,'tax_pay'),bv(1,'tax_pay'),bv(2,'tax_pay'),1)
+    +fsTot('Total Current Liabilities',cl(0),cl(1),cl(2))
+    +fsTot('Total Liabilities',tl(0),tl(1),tl(2))
+    +fsGrand('TOTAL EQUITY & LIABILITIES',eq(0)+tl(0),eq(1)!==null&&tl(1)!==null?eq(1)+tl(1):null,eq(2)!==null&&tl(2)!==null?eq(2)+tl(2):null)
+    +fsNote('Prepared in accordance with IFRS/IAS 1. Audited by: '+co().auditor+'. CFO: '+co().cfo+'. Columns show selected year and two prior comparatives.')
+    +'</div></div>';
+}
+
+// ── STATEMENT OF PROFIT & LOSS ────────────────────────────────
+function vSPNL(){
+  var t=fyT(),ff=t.map(function(yr){return FY[yr]||null;});
+  if(!ff[0])return '<div style="padding:22px;text-align:center;color:#9ca3af">No data</div>';
+  function fv(i,k){return ff[i]?ff[i][k]:null;}
+  function rev(i){var f=ff[i];return f?f.rev_goods+f.rev_svcs+f.rev_other:null;}
+  function cogs(i){var f=ff[i];return f?f.cogs_open+f.cogs_purch-f.cogs_close:null;}
+  function opex(i){var f=ff[i];return f?f.dist+f.admin-f.oth_inc:null;}
+  function ebit(i){var f=ff[i];return f?f.pbt+f.fin_costs:null;}
+  function oci(i){var f=ff[i];return f?f.oci_rev+f.oci_fx:null;}
+  return '<div class="card"><div class="ch"><span class="ct">Statement of Profit or Loss & OCI</span>'+fsExportBtn()+'</div>'
+    +fsHeader('STATEMENT OF PROFIT OR LOSS AND OTHER COMPREHENSIVE INCOME','Year ended 30 June '+t[0]+' | Per IAS 1')
+    +'<div class="fs-wrap">'+fsTH()
+    +'<div class="fs-title">REVENUE</div>'
+    +fsRow('Revenue from sale of goods',fv(0,'rev_goods'),fv(1,'rev_goods'),fv(2,'rev_goods'),1)
+    +fsRow('Revenue from services rendered',fv(0,'rev_svcs'),fv(1,'rev_svcs'),fv(2,'rev_svcs'),1)
+    +fsRow('Other operating income',fv(0,'rev_other'),fv(1,'rev_other'),fv(2,'rev_other'),1)
+    +fsTot('Total Revenue',rev(0),rev(1),rev(2))
+    +'<div class="fs-title">COST OF GOODS SOLD</div>'
+    +fsRow('Opening inventories',fv(0,'cogs_open'),fv(1,'cogs_open'),fv(2,'cogs_open'),1)
+    +fsRow('Add: Purchases during the year',fv(0,'cogs_purch'),fv(1,'cogs_purch'),fv(2,'cogs_purch'),1)
+    +fsRow('Less: Closing inventories',-fv(0,'cogs_close'),-fv(1,'cogs_close'),-fv(2,'cogs_close'),1)
+    +fsTot('Cost of Goods Sold',cogs(0),cogs(1),cogs(2))
+    +fsGrand('GROSS PROFIT',fv(0,'gross'),fv(1,'gross'),fv(2,'gross'))
+    +'<div class="fs-title">OPERATING EXPENSES</div>'
+    +fsRow('Distribution costs',fv(0,'dist'),fv(1,'dist'),fv(2,'dist'),1)
+    +fsRow('Administrative expenses',fv(0,'admin'),fv(1,'admin'),fv(2,'admin'),1)
+    +fsRow('Other income (credit)',-fv(0,'oth_inc'),-fv(1,'oth_inc'),-fv(2,'oth_inc'),1)
+    +fsTot('Total Operating Expenses',opex(0),opex(1),opex(2))
+    +fsSub('Operating Profit (EBIT)',ebit(0),ebit(1),ebit(2))
+    +fsRow('Finance costs',-fv(0,'fin_costs'),-fv(1,'fin_costs'),-fv(2,'fin_costs'),1)
+    +fsTot('Profit Before Tax',fv(0,'pbt'),fv(1,'pbt'),fv(2,'pbt'))
+    +fsRow('Income tax expense',-fv(0,'tax'),-fv(1,'tax'),-fv(2,'tax'),1)
+    +fsGrand('PROFIT FOR THE YEAR',fv(0,'pat'),fv(1,'pat'),fv(2,'pat'))
+    +'<div class="fs-title" style="margin-top:12px">OTHER COMPREHENSIVE INCOME</div>'
+    +fsRow('Revaluation surplus on PPE',fv(0,'oci_rev'),fv(1,'oci_rev'),fv(2,'oci_rev'),1)
+    +fsRow('Exchange differences on translation',fv(0,'oci_fx'),fv(1,'oci_fx'),fv(2,'oci_fx'),1)
+    +fsTot('Total Other Comprehensive Income',oci(0),oci(1),oci(2))
+    +fsGrand('TOTAL COMPREHENSIVE INCOME FOR THE YEAR',fv(0,'tci'),fv(1,'tci'),fv(2,'tci'))
+    +'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px;padding-bottom:4px">'
+    +t.map(function(yr,i){
+      var f=ff[i];if(!f)return '<div style="background:var(--slate);border-radius:7px;padding:9px 11px;color:#9ca3af;font-size:11px">No data for '+yr+'</div>';
+      var rv=f.rev_goods+f.rev_svcs+f.rev_other;var fy2=parseInt(yr);
+      return '<div style="background:var(--slate);border-radius:7px;padding:9px 11px"><div style="font-size:9.5px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">FY'+(fy2-1)+'/'+yr.slice(2)+'</div>'
+        +'<div style="font-size:10.5px;margin-bottom:3px">GP Margin: <strong>'+Math.round(f.gross/rv*100)+'%</strong></div>'
+        +'<div style="font-size:10.5px;margin-bottom:3px">NP Margin: <strong>'+Math.round(f.pat/rv*100)+'%</strong></div>'
+        +'<div style="font-size:10.5px">Eff. Tax Rate: <strong>'+Math.round(f.tax/f.pbt*100)+'%</strong></div></div>';
+    }).join('')+'</div>'
+    +fsNote('Per IAS 1/IFRS. Comparatives shown for '+t[1]+' and '+t[2]+'.')
+    +'</div></div>';
+}
+
+// ── STATEMENT OF CHANGES IN EQUITY ───────────────────────────
+function vSOCE(){
+  var t=fyT(),ff=t.map(function(yr){return FY[yr]||null;});
+  return '<div class="card"><div class="ch"><span class="ct">Statement of Changes in Equity</span>'+fsExportBtn()+'</div>'
+    +fsHeader('STATEMENT OF CHANGES IN EQUITY','For the years ended 30 June | Per IAS 1')
+    +'<div class="fs-wrap">'
+    +t.map(function(yr,i){
+      var f=ff[i];
+      if(!f)return '<div class="fs-title">'+yr+'</div><div style="color:#9ca3af;font-size:11px;padding:8px 0">No data available.</div>';
+      var oci=f.oci_rev+f.oci_fx;
+      var te_open=f.bs.sh_cap+(f.bs.res-oci)+f.soce.open_ret;
+      var te_close=f.bs.sh_cap+f.bs.res+f.bs.ret_earn;
+      return '<div class="fs-title">YEAR ENDED 30 JUNE '+yr+'</div>'
+        +'<div class="fsg soce hdr"><span></span><span>Share Capital</span><span>Reserves</span><span>Retained Earnings</span><span>Total Equity</span></div>'
+        +'<div class="fsg soce row"><span>Balance at 1 July '+(parseInt(yr)-1)+'</span><span>'+fmt(f.bs.sh_cap)+'</span><span>'+fmt(f.bs.res-oci)+'</span><span>'+fmt(f.soce.open_ret)+'</span><span>'+fmt(te_open)+'</span></div>'
+        +'<div class="fsg soce row"><span>Profit for the year</span><span>—</span><span>—</span><span>'+fmt(f.pat)+'</span><span>'+fmt(f.pat)+'</span></div>'
+        +'<div class="fsg soce row"><span>Other comprehensive income</span><span>—</span><span>'+fmt(oci)+'</span><span>—</span><span>'+fmt(oci)+'</span></div>'
+        +'<div class="fsg soce row"><span>Dividends declared and paid</span><span>—</span><span>—</span><span>'+fmt(f.soce.div)+'</span><span>'+fmt(f.soce.div)+'</span></div>'
+        +'<div class="fsg soce tot"><span>Balance at 30 June '+yr+'</span><span>'+fmt(f.bs.sh_cap)+'</span><span>'+fmt(f.bs.res)+'</span><span>'+fmt(f.bs.ret_earn)+'</span><span>'+fmt(te_close)+'</span></div>';
+    }).join('')
+    +fsNote('Per IAS 1. OCI includes revaluation surplus on PPE and foreign exchange translation differences.')
+    +'</div></div>';
+}
+
+// ── STATEMENT OF CASH FLOWS ───────────────────────────────────
+function vSOCF(){
+  var t=fyT(),ff=t.map(function(yr){return FY[yr]||null;});
+  function fv(i,k){return ff[i]?ff[i][k]:null;}
+  function cv(i,k){return ff[i]?ff[i].cf[k]:null;}
+  function opc(i){var f=ff[i];if(!f)return null;var c=f.cf;return f.pbt+c.dep+f.fin_costs+c.wc+c.tax_pd;}
+  function inv(i){var f=ff[i];if(!f)return null;var c=f.cf;return c.capex+c.disp+c.invest;}
+  function fin2(i){var f=ff[i];if(!f)return null;var c=f.cf;return c.loan_rep-f.fin_costs+c.div;}
+  function net(i){return opc(i)!==null?opc(i)+inv(i)+fin2(i):null;}
+  return '<div class="card"><div class="ch"><span class="ct">Statement of Cash Flows</span>'+fsExportBtn()+'</div>'
+    +fsHeader('STATEMENT OF CASH FLOWS','Year ended 30 June '+t[0]+' | Indirect Method per IAS 7')
+    +'<div class="fs-wrap">'+fsTH()
+    +'<div class="fs-title">OPERATING ACTIVITIES</div>'
+    +fsRow('Profit before tax',fv(0,'pbt'),fv(1,'pbt'),fv(2,'pbt'),1)
+    +fsRow('Add: Depreciation and amortisation',cv(0,'dep'),cv(1,'dep'),cv(2,'dep'),1)
+    +fsRow('Add: Finance costs',fv(0,'fin_costs'),fv(1,'fin_costs'),fv(2,'fin_costs'),1)
+    +fsRow('Changes in working capital',cv(0,'wc'),cv(1,'wc'),cv(2,'wc'),1)
+    +fsRow('Income tax paid',cv(0,'tax_pd'),cv(1,'tax_pd'),cv(2,'tax_pd'),1)
+    +fsTot('Net Cash Generated from Operating Activities',opc(0),opc(1),opc(2))
+    +'<div class="fs-title">INVESTING ACTIVITIES</div>'
+    +fsRow('Purchase of property, plant & equipment',cv(0,'capex'),cv(1,'capex'),cv(2,'capex'),1)
+    +fsRow('Proceeds from disposal of assets',cv(0,'disp'),cv(1,'disp'),cv(2,'disp'),1)
+    +fsRow('Net investment in financial assets',cv(0,'invest'),cv(1,'invest'),cv(2,'invest'),1)
+    +fsTot('Net Cash Used in Investing Activities',inv(0),inv(1),inv(2))
+    +'<div class="fs-title">FINANCING ACTIVITIES</div>'
+    +fsRow('Repayment of long-term borrowings',cv(0,'loan_rep'),cv(1,'loan_rep'),cv(2,'loan_rep'),1)
+    +fsRow('Finance costs paid',-fv(0,'fin_costs'),-fv(1,'fin_costs'),-fv(2,'fin_costs'),1)
+    +fsRow('Dividends paid to shareholders',cv(0,'div'),cv(1,'div'),cv(2,'div'),1)
+    +fsTot('Net Cash Used in Financing Activities',fin2(0),fin2(1),fin2(2))
+    +fsTot('Net (Decrease) / Increase in Cash',net(0),net(1),net(2))
+    +fsRow('Cash and bank at beginning of year',cv(0,'open_cash'),cv(1,'open_cash'),cv(2,'open_cash'),1)
+    +fsGrand('Cash and Bank at End of Year',ff[0]?ff[0].bs.cash:null,ff[1]?ff[1].bs.cash:null,ff[2]?ff[2].bs.cash:null)
+    +fsNote('IAS 7 indirect method. Finance costs classified under financing activities. Closing cash balance agrees to Statement of Financial Position.')
+    +'</div></div>';
+}
+
+// ── PRIOR YEAR ANALYSIS ───────────────────────────────────────
+function vPrior(){
+  return '<div class="card"><div class="ch"><span class="ct">Prior Year Analysis — All 3 Fiscal Years</span></div>'
+    +'<div style="padding:0 14px"><div class="vtabs" style="margin-top:11px">'
+    +'<div class="vtab on" onclick="swPTab(this,\'kpi\')">Financial KPIs</div>'
+    +'<div class="vtab" onclick="swPTab(this,\'ratio\')">Ratio Analysis</div>'
+    +'<div class="vtab" onclick="swPTab(this,\'chart\')">Visual Chart</div>'
+    +'</div></div><div id="ptab">'+priorKPI()+'</div></div>';
+}
+function swPTab(el,tab){document.querySelectorAll('.vtab').forEach(function(x){x.classList.remove('on');});el.classList.add('on');E('ptab').innerHTML={kpi:priorKPI,ratio:priorRatio,chart:priorChart}[tab]();}
+function priorKPI(){
+  var yrs=['2026','2025','2024'];
+  function rv(y){var f=FY[y];return f.rev_goods+f.rev_svcs+f.rev_other;}
+  function ta(y){var b=FY[y].bs;return b.ppe_net+b.intang+b.invest_nc+b.inv+b.trade_rec+b.adv+b.cash;}
+  function te(y){var b=FY[y].bs;return b.sh_cap+b.res+b.ret_earn;}
+  var rows=[['Total Revenue',rv],['Gross Profit',function(y){return FY[y].gross;}],['EBIT (Operating Profit)',function(y){return FY[y].pbt+FY[y].fin_costs;}],['Profit Before Tax',function(y){return FY[y].pbt;}],['Net Profit After Tax',function(y){return FY[y].pat;}],['Total Comprehensive Income',function(y){return FY[y].tci;}],['Total Assets',ta],['Total Equity',te],['Cash and Bank Balances',function(y){return FY[y].bs.cash;}],['Dividends Paid',function(y){return Math.abs(FY[y].soce.div);}]];
+  return '<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Metric</th>'+yrs.map(function(y){return '<th style="text-align:right">FY '+(parseInt(y)-1)+'/'+y.slice(2)+'</th>';}).join('')+'<th style="text-align:right">2-yr CAGR</th></tr></thead><tbody>'
+    +rows.map(function(r){var vals=yrs.map(function(y){return r[1](y);});var cagr=Math.round((Math.pow(vals[0]/vals[2],.5)-1)*100);return '<tr><td style="font-weight:500">'+r[0]+'</td>'+vals.map(function(v){return '<td style="text-align:right" class="num">'+fmt(v)+'</td>';}).join('')+'<td style="text-align:right" class="'+(cagr>=0?'grn':'red')+' num">'+(cagr>=0?'+':'')+cagr+'%</td></tr>';}).join('')
+    +'</tbody></table></div>';
+}
+function priorRatio(){
+  var yrs=['2026','2025','2024'];
+  function ta(y){var b=FY[y].bs;return b.ppe_net+b.intang+b.invest_nc+b.inv+b.trade_rec+b.adv+b.cash;}
+  function te(y){var b=FY[y].bs;return b.sh_cap+b.res+b.ret_earn;}
+  function ca(y){var b=FY[y].bs;return b.inv+b.trade_rec+b.adv+b.cash;}
+  function cl(y){var b=FY[y].bs;return b.st_loan+b.trade_pay+b.accr+b.tax_pay;}
+  function tl(y){var b=FY[y].bs;return b.lt_loan+b.def_tax+b.st_loan+b.trade_pay+b.accr+b.tax_pay;}
+  function rv(y){var f=FY[y];return f.rev_goods+f.rev_svcs+f.rev_other;}
+  var rats=[['Gross Profit Margin',function(y){return Math.round(FY[y].gross/rv(y)*100)+'%';}],['Net Profit Margin',function(y){return Math.round(FY[y].pat/rv(y)*100)+'%';}],['Return on Equity (ROE)',function(y){return Math.round(FY[y].pat/te(y)*100)+'%';}],['Return on Assets (ROA)',function(y){return Math.round(FY[y].pat/ta(y)*100)+'%';}],['Debt-to-Equity',function(y){return Math.round(tl(y)/te(y)*100)/100+'x';}],['Current Ratio',function(y){return Math.round(ca(y)/cl(y)*100)/100+'x';}],['Quick Ratio',function(y){var b=FY[y].bs;return Math.round((b.trade_rec+b.adv+b.cash)/cl(y)*100)/100+'x';}],['Interest Coverage',function(y){var f=FY[y];return Math.round((f.pbt+f.fin_costs)/f.fin_costs*100)/100+'x';}],['Asset Turnover',function(y){return Math.round(rv(y)/ta(y)*100)/100+'x';}],['Equity Multiplier',function(y){return Math.round(ta(y)/te(y)*100)/100+'x';}]];
+  return '<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Ratio</th>'+yrs.map(function(y){return '<th style="text-align:right">FY '+(parseInt(y)-1)+'/'+y.slice(2)+'</th>';}).join('')+'</tr></thead><tbody>'
+    +rats.map(function(r){return '<tr><td style="font-weight:500">'+r[0]+'</td>'+yrs.map(function(y){return '<td style="text-align:right" class="num">'+r[1](y)+'</td>';}).join('')+'</tr>';}).join('')
+    +'</tbody></table></div>';
+}
+function priorChart(){
+  var yrs=['2024','2025','2026'],labs=['FY23/24','FY24/25','FY25/26'];
+  function rv(y){var f=FY[y];return f.rev_goods+f.rev_svcs+f.rev_other;}
+  var revs=yrs.map(rv),gps=yrs.map(function(y){return FY[y].gross;}),nps=yrs.map(function(y){return FY[y].pat;});
+  var maxV=Math.max.apply(null,revs),sw=480,sh=150,pad=44,bw=24,grp=16;
+  var s='<svg width="100%" viewBox="0 0 '+sw+' '+sh+'" xmlns="http://www.w3.org/2000/svg" style="display:block">';
+  [0,.25,.5,.75,1].forEach(function(f){var yy=sh-22-f*(sh-38);s+='<line x1="40" y1="'+yy+'" x2="'+(sw-8)+'" y2="'+yy+'" stroke="#e5e7eb" stroke-width="0.5"/>';s+='<text x="36" y="'+(yy+3)+'" text-anchor="end" font-size="8" fill="#9ca3af" font-family="system-ui">'+Math.round(f*maxV/1000000)+'M</text>';});
+  yrs.forEach(function(yr,i){var x0=pad+i*(bw*3+grp+12),rh=Math.max(2,Math.round((revs[i]/maxV)*(sh-38))),gh=Math.max(2,Math.round((gps[i]/maxV)*(sh-38))),nh=Math.max(2,Math.round((nps[i]/maxV)*(sh-38)));
+    s+='<rect x="'+x0+'" y="'+(sh-22-rh)+'" width="'+bw+'" height="'+rh+'" rx="2" fill="#0D1B2A" opacity=".9"/>';
+    s+='<rect x="'+(x0+bw+3)+'" y="'+(sh-22-gh)+'" width="'+bw+'" height="'+gh+'" rx="2" fill="#F59E0B"/>';
+    s+='<rect x="'+(x0+bw*2+6)+'" y="'+(sh-22-nh)+'" width="'+bw+'" height="'+nh+'" rx="2" fill="#10B981"/>';
+    s+='<text x="'+(x0+bw*1.5+3)+'" y="'+(sh-6)+'" text-anchor="middle" font-size="9" fill="#6b7280" font-family="system-ui">'+labs[i]+'</text>';
+    s+='<text x="'+x0+'" y="'+(sh-22-rh-4)+'" font-size="8" fill="#0D1B2A" font-family="system-ui">'+fmtM(revs[i])+'</text>';
+  });
+  s+='<rect x="8" y="8" width="9" height="7" rx="1" fill="#0D1B2A"/><text x="20" y="15" font-size="9" fill="#374151" font-family="system-ui">Revenue</text><rect x="80" y="8" width="9" height="7" rx="1" fill="#F59E0B"/><text x="92" y="15" font-size="9" fill="#374151" font-family="system-ui">Gross Profit</text><rect x="168" y="8" width="9" height="7" rx="1" fill="#10B981"/><text x="180" y="15" font-size="9" fill="#374151" font-family="system-ui">Net Profit</text></svg>';
+  return '<div style="padding:14px">'+s+'</div>';
+}
+
+// ── GENERAL LEDGER ─────────────────────────────────────────────
+function vLedger(){
+  var txns=S.txns.filter(function(t){return t.fy===G.fy&&(t.desc+' '+t.ref).toLowerCase().includes(G.ls)&&(G.lf==='all'||t.status===G.lf);});
+  return '<div class="card"><div class="ch" style="flex-wrap:wrap;gap:7px">'
+    +'<input class="inp" placeholder="Search..." value="'+G.ls+'" oninput="G.ls=this.value;setView(\'ledger\')" style="max-width:180px"/>'
+    +'<select class="inp" onchange="G.lf=this.value;setView(\'ledger\')" style="max-width:140px"><option value="all">All Statuses</option><option value="posted">Posted</option><option value="review">Review</option><option value="pending">Pending</option><option value="overdue">Overdue</option></select>'
+    +'<span class="mut">'+txns.length+' entries · FY '+G.fy+'</span>'
+    +'<button class="btn btnp btnsm" onclick="showModal(\'je\')">+ Entry</button></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Ref</th><th>Date</th><th>Description</th><th>Account</th><th style="text-align:right">Debit</th><th style="text-align:right">Credit</th><th>By</th><th>Status</th></tr></thead><tbody>'
+    +(txns.length?txns.map(function(t){return '<tr onclick="openTxn(\''+t.id+'\')"><td class="mono">'+t.ref+'</td><td class="mut">'+fmtD(t.date)+'</td><td style="font-weight:500">'+t.desc+'</td><td class="mono" style="font-size:11px">'+t.acct+'</td><td style="text-align:right" class="num red">'+(t.dr?fmt(t.dr):'')+'</td><td style="text-align:right" class="num grn">'+(t.cr?fmt(t.cr):'')+'</td><td class="mut">'+t.by+'</td><td>'+tag(t.status)+'</td></tr>';}).join('')
+    :'<tr><td colspan="8" class="mut" style="text-align:center;padding:22px">No entries for FY '+G.fy+'</td></tr>')
+    +'</tbody></table></div></div>';
+}
+function openTxn(id){
+  var t=S.txns.find(function(x){return x.id===id;});if(!t)return;
+  openM(t.desc,t.ref+' · '+fmtD(t.date),
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px">'
+    +cf('Reference',t.ref)+cf('Date',fmtD(t.date))+cf('Account',t.acct)
+    +cf('Debit',t.dr?fmt(t.dr):'—')+cf('Credit',t.cr?fmt(t.cr):'—')
+    +cf('Status',tag(t.status))+cf('Posted By',t.by)
+    +cf('Audit Hash','<span class="mono">'+t.hash+'</span>')
+    +'</div>'+attSection(t.id),
+    (G.user&&(G.user.role==='CFO'||G.user.role==='Manager')&&(t.status==='review'||t.status==='pending')?'<button class="btn btnp" onclick="appTxn(\''+id+'\')">Approve ✓</button>':'')
+    +'<button class="btn btnr" onclick="if(confirm(\'Delete?\'))del(\'txns\',\''+id+'\',function(){cM();})">Delete</button>'
+    +'<button class="btn" onclick="cM()">Close</button>');
+}
+async function appTxn(id){
+  var t=S.txns.find(function(x){return x.id===id;});if(!t)return;
+  if(t._sid){var r=await api('PATCH','/api/transactions/'+t._sid,{status:'posted'});if(r&&r.ok){t.status='posted';save('txns',t);toast('ok','Approved on server.');}else if(!r){t.status='posted';save('txns',t);toast('ok','Approved locally.');}else{toast('er',r.data.error||'Failed.');return;}}
+  else{t.status='posted';save('txns',t);toast('ok','Approved.');}
+  addLog('Approved transaction '+t.ref,'approved');cM();setView('ledger');
+}
+
+// ── JOURNAL ENTRIES ───────────────────────────────────────────
+function vJournals(){
+  return '<div class="card"><div class="ch"><span class="ct">Journal Entries — Double Entry</span><button class="btn btnp btnsm" onclick="showModal(\'je\')">+ New Journal</button></div>'
+    +(S.journals.length?'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Journal #</th><th>Date</th><th>Description</th><th>Debit Account</th><th>Credit Account</th><th style="text-align:right">Amount</th><th>Status</th></tr></thead><tbody>'
+    +S.journals.map(function(j){return '<tr><td class="mono">'+j.id+'</td><td class="mut">'+fmtD(j.date)+'</td><td style="font-weight:500">'+j.desc+'</td><td class="mono">'+j.dr_acct+'</td><td class="mono">'+j.cr_acct+'</td><td style="text-align:right" class="num">'+fmt(j.amount)+'</td><td>'+tag(j.status)+'</td></tr>';}).join('')
+    +'</tbody></table></div>'
+    :'<div style="padding:22px;text-align:center;color:#9ca3af">No journal entries yet. Click + New Journal to post double-entry records.</div>')
+    +'</div>';
+}
+
+// ── CHART OF ACCOUNTS ─────────────────────────────────────────
+var COA=[
+  {code:'1000',name:'Cash & Bank',type:'Asset',normal:'Dr'},{code:'1100',name:'Accounts Receivable',type:'Asset',normal:'Dr'},{code:'1200',name:'Inventory',type:'Asset',normal:'Dr'},{code:'1300',name:'Prepaid Expenses',type:'Asset',normal:'Dr'},{code:'1500',name:'Property, Plant & Equipment',type:'Asset',normal:'Dr'},{code:'1510',name:'Accumulated Depreciation',type:'Asset',normal:'Cr'},
+  {code:'2000',name:'Accounts Payable',type:'Liability',normal:'Cr'},{code:'2100',name:'Short-term Loans',type:'Liability',normal:'Cr'},{code:'2200',name:'Accrued Liabilities',type:'Liability',normal:'Cr'},{code:'2300',name:'Tax Payable',type:'Liability',normal:'Cr'},{code:'2500',name:'Long-term Debt',type:'Liability',normal:'Cr'},
+  {code:'3000',name:'Share Capital',type:'Equity',normal:'Cr'},{code:'3100',name:'Retained Earnings',type:'Equity',normal:'Cr'},{code:'3200',name:'Other Reserves',type:'Equity',normal:'Cr'},
+  {code:'4100',name:'Sales Revenue',type:'Revenue',normal:'Cr'},{code:'4200',name:'Service Revenue',type:'Revenue',normal:'Cr'},{code:'4900',name:'Other Income',type:'Revenue',normal:'Cr'},
+  {code:'5010',name:'Cost of Goods Sold',type:'COGS',normal:'Dr'},{code:'5020',name:'Opening Inventory',type:'COGS',normal:'Dr'},{code:'5030',name:'Purchases',type:'COGS',normal:'Dr'},
+  {code:'6010',name:'Salary & Wages',type:'Expense',normal:'Dr'},{code:'6200',name:'Admin & Office',type:'Expense',normal:'Dr'},{code:'6300',name:'Logistics & Freight',type:'Expense',normal:'Dr'},{code:'6400',name:'IT & Depreciation',type:'Expense',normal:'Dr'},{code:'6500',name:'Marketing',type:'Expense',normal:'Dr'},{code:'6600',name:'Finance Charges',type:'Expense',normal:'Dr'},{code:'7000',name:'Income Tax',type:'Expense',normal:'Dr'},
+];
+function vCOA(){
+  var d=FY[G.fy];
+  var bm={'1000':d.bs.cash,'1100':d.bs.trade_rec,'1200':d.bs.inv,'1500':d.bs.ppe_gross,'1510':-d.bs.ppe_dep,'2000':d.bs.trade_pay,'2100':d.bs.st_loan,'2200':d.bs.accr,'2300':d.bs.tax_pay,'2500':d.bs.lt_loan,'3000':d.bs.sh_cap,'3100':d.bs.ret_earn,'3200':d.bs.res,'4100':d.rev_goods,'4200':d.rev_svcs,'4900':d.rev_other,'5010':d.cogs_open+d.cogs_purch-d.cogs_close,'6010':d.admin,'6200':d.admin*0.2,'6300':d.dist,'6400':d.cf.dep,'6500':d.dist*0.3,'6600':d.fin_costs,'7000':d.tax};
+  var types=['Asset','Liability','Equity','Revenue','COGS','Expense'];
+  return types.map(function(type){
+    var rows=COA.filter(function(a){return a.type===type;});
+    var tot=rows.reduce(function(s,a){return s+(bm[a.code]||0);},0);
+    return '<div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">'+type+' Accounts</span><span class="mut">'+rows.length+' accounts · Total: '+fmt(tot)+'</span></div>'
+      +'<table class="gt"><thead><tr><th>Code</th><th>Account Name</th><th>Normal Balance</th><th style="text-align:right">Balance FY'+G.fy.slice(2)+'</th></tr></thead><tbody>'
+      +rows.map(function(a){var b=bm[a.code]||0;return '<tr><td class="mono">'+a.code+'</td><td style="font-weight:500">'+a.name+'</td><td><span class="tag '+(a.normal==='Dr'?'ty':'tg')+'">'+a.normal+'</span></td><td style="text-align:right" class="num">'+fmt(b)+'</td></tr>';}).join('')
+      +'</tbody></table></div>';
+  }).join('');
+}
+
+// ── FIXED ASSET REGISTER ──────────────────────────────────────
+function vFAR(){
+  var cats={};S.assets.forEach(function(a){if(!cats[a.cat])cats[a.cat]=[];cats[a.cat].push(a);});
+  var tC=S.assets.reduce(function(s,a){return s+a.cost;},0);
+  var tN=S.assets.reduce(function(s,a){return s+a.nbv;},0);
+  var tD=S.assets.reduce(function(s,a){return s+a.dyr;},0);
+  var tAC=S.assets.reduce(function(s,a){return s+a.adcl;},0);
+  return '<div class="kg">'
+    +kpi('Gross Cost',fmtM(tC),'total PPE value','')
+    +kpi('Accum. Depreciation',fmtM(tAC),'carried forward','dn')
+    +kpi('Net Book Value',fmtM(tN),'as at 30 Jun '+G.fy,'')
+    +kpi('Dep. Charge FY'+G.fy.slice(2),fmtM(tD),'this year','dn')
+    +'</div>'
+    +'<div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">Automated Depreciation Engine</span></div>'
+    +'<div style="padding:13px 14px;display:flex;align-items:center;gap:14px">'
+    +'<div style="flex:1;font-size:12px;color:#6b7280">Click <strong style="color:var(--heading)">Run Depreciation</strong> to automatically calculate depreciation for all assets, update net book values, and post double-entry journal entries to the General Ledger.</div>'
+    +'<button class="btn btna" onclick="runDepreciation()">&#9881; Run Depreciation</button>'
+    +'<button class="btn btnp btnsm" onclick="showModal(\'asset\')">+ Add Asset</button>'
+    +'</div></div>'
+    +Object.keys(cats).map(function(cat){
+      var items=cats[cat];
+      var catC=items.reduce(function(s,a){return s+a.cost;},0);
+      var catN=items.reduce(function(s,a){return s+a.nbv;},0);
+      var catD=items.reduce(function(s,a){return s+a.dyr;},0);
+      return '<div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">'+cat+'</span><span class="mut">Cost: '+fmt(catC)+' &nbsp;·&nbsp; Dep: '+fmt(catD)+' &nbsp;·&nbsp; NBV: '+fmt(catN)+'</span></div>'
+        +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Asset ID</th><th>Description</th><th>Acquired</th><th>Life (Yrs)</th><th>Rate %</th><th style="text-align:right">Cost</th><th style="text-align:right">Acc.Dep Open</th><th style="text-align:right">Dep. Charge</th><th style="text-align:right">Acc.Dep Close</th><th style="text-align:right">Net Book Value</th><th>Location</th></tr></thead><tbody>'
+        +items.map(function(a){return '<tr onclick="openFA(\''+a.id+'\')"><td class="mono">'+a.id+'</td><td style="font-weight:500">'+a.desc+'</td><td class="mut">'+fmtD(a.acq)+'</td><td style="text-align:center;color:#6b7280">'+a.life+'</td><td class="mut">'+a.rate+'%</td><td style="text-align:right" class="num">'+fmt(a.cost)+'</td><td style="text-align:right" class="num red">'+fmt(a.adop)+'</td><td style="text-align:right" class="num red">'+fmt(a.dyr)+'</td><td style="text-align:right" class="num red">'+fmt(a.adcl)+'</td><td style="text-align:right" class="num grn">'+fmt(a.nbv)+'</td><td class="mut">'+a.loc+'</td></tr>';}).join('')
+        +'<tr style="background:var(--card2);font-weight:700"><td colspan="5">Subtotal — '+cat+'</td><td style="text-align:right" class="num">'+fmt(catC)+'</td><td></td><td style="text-align:right" class="num red">'+fmt(catD)+'</td><td></td><td style="text-align:right" class="num grn">'+fmt(catN)+'</td><td></td></tr>'
+        +'</tbody></table></div></div>';
+    }).join('')
+    +'<div class="card"><div class="ch"><span class="ct">PPE Movement Summary — IAS 16</span></div>'
+    +'<table class="gt"><thead><tr><th>Category</th><th style="text-align:right">Opening NBV</th><th style="text-align:right">Additions</th><th style="text-align:right">Disposals</th><th style="text-align:right">Depreciation Charge</th><th style="text-align:right">Closing NBV</th></tr></thead><tbody>'
+    +Object.keys(cats).map(function(cat){var items=cats[cat];var openNBV=items.reduce(function(s,a){return s+a.cost-a.adop;},0);var dep=items.reduce(function(s,a){return s+a.dyr;},0);var nbv=items.reduce(function(s,a){return s+a.nbv;},0);return '<tr><td style="font-weight:500">'+cat+'</td><td style="text-align:right" class="num">'+fmt(openNBV)+'</td><td style="text-align:right;color:#9ca3af">—</td><td style="text-align:right;color:#9ca3af">—</td><td style="text-align:right" class="num red">'+fmt(dep)+'</td><td style="text-align:right" class="num grn">'+fmt(nbv)+'</td></tr>';}).join('')
+    +'<tr style="background:var(--card2);font-weight:700"><td>TOTAL</td><td style="text-align:right" class="num">'+fmt(S.assets.reduce(function(s,a){return s+a.cost-a.adop;},0))+'</td><td style="text-align:right;color:#9ca3af">—</td><td style="text-align:right;color:#9ca3af">—</td><td style="text-align:right" class="num red">'+fmt(tD)+'</td><td style="text-align:right" class="num grn">'+fmt(tN)+'</td></tr>'
+    +'</tbody></table></div>';
+}
+function runDepreciation(){
+  var count=0;
+  S.assets.forEach(function(a){
+    if(a.nbv>0){
+      a.adop=a.adcl;
+      a.dyr=Math.round(a.cost*a.rate/100);
+      a.adcl=Math.min(a.adop+a.dyr,a.cost);
+      a.nbv=Math.max(0,a.cost-a.adcl);
+      save('assets',a);
+      var je={id:uid('TXN'),ref:uid('DEP'),desc:'Depreciation — '+a.desc,acct:'6400',dr:a.dyr,cr:0,date:today(),status:'posted',by:G.user?G.user.name:'System',att:[],hash:Math.random().toString(16).slice(2,10).toUpperCase(),fy:G.fy};
+      save('txns',je);
+      count++;
+    }
+  });
+  addLog('Ran automated depreciation for '+count+' assets. Journal entries posted.','posted');
+  toast('ok','Depreciation run complete. '+count+' assets updated. Journal entries posted to General Ledger.');
+  setTimeout(function(){setView('far');},100);
+}
+function openFA(id){
+  var a=S.assets.find(function(x){return x.id===id;});if(!a)return;
+  openM(a.desc,'Fixed Asset — '+a.id,
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+    +cf('Asset ID',a.id)+cf('Category',a.cat)+cf('Location',a.loc)+cf('Date Acquired',fmtD(a.acq))
+    +cf('Useful Life',a.life+' years')+cf('Dep. Method',a.method)+cf('Annual Rate',a.rate+'%')
+    +cf('Gross Cost',fmt(a.cost))+cf('Acc. Dep (Opening)','<span class="red">'+fmt(a.adop)+'</span>')
+    +cf('Dep. Charge (Year)','<span class="red">'+fmt(a.dyr)+'</span>')
+    +cf('Acc. Dep (Closing)','<span class="red">'+fmt(a.adcl)+'</span>')
+    +cf('Net Book Value','<strong class="grn">'+fmt(a.nbv)+'</strong>')
+    +cf('Status',tag(a.status))
+    +'</div>',
+    '<button class="btn" onclick="cM()">Close</button>');
+}
+
+// ── INVOICES ──────────────────────────────────────────────────
+function vInvoices(){
+  return '<div class="card"><div class="ch"><span class="ct">Invoices & Accounts Receivable ('+S.invoices.length+')</span><button class="btn btnp btnsm" onclick="showModal(\'inv\')">+ New Invoice</button></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Invoice #</th><th>Customer</th><th>Invoice Date</th><th>Due Date</th><th style="text-align:right">Amount</th><th>Currency</th><th>Status</th><th></th></tr></thead><tbody>'
+    +S.invoices.map(function(i){var tot=i.items.reduce(function(s,x){return s+x.qty*x.rate;},0);return '<tr onclick="openInv(\''+i.id+'\')"><td class="mono">'+i.id+'</td><td style="font-weight:500">'+cn(i.cust)+'</td><td class="mut">'+fmtD(i.date)+'</td><td class="mut '+(i.status==='overdue'?'red':'')+'">'+fmtD(i.due)+'</td><td style="text-align:right" class="num">'+fmt(tot)+'</td><td class="mut">'+i.cur+'</td><td>'+tag(i.status)+'</td><td>'+(i.status==='draft'?'<button class="btn btnsm btna btnxs" onclick="event.stopPropagation();sendInv(\''+i.id+'\')">Send</button>':i.status==='sent'||i.status==='overdue'?'<button class="btn btnsm btng btnxs" onclick="event.stopPropagation();payInv(\''+i.id+'\')">Pay</button>':'')+'<button class="btn btnsm" onclick="event.stopPropagation();exportInvoicePDF(i.id)" style="font-size:10px;margin-left:2px">PDF</button>'+'</td></tr>';}).join('')
+    +'</tbody></table></div></div>';
+}
+function openInv(id){
+  var i=S.invoices.find(function(x){return x.id===id;});if(!i)return;
+  var tot=i.items.reduce(function(s,x){return s+x.qty*x.rate;},0);
+  openM('Invoice '+id,cn(i.cust)+' · Due '+fmtD(i.due),
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px">'+cf('Customer',cn(i.cust))+cf('Status',tag(i.status))+cf('Invoice Date',fmtD(i.date))+cf('Due Date',fmtD(i.due))+cf('Total',fmt(tot))+cf('Currency',i.cur)+'</div>'
+    +'<div style="font-size:11.5px;font-weight:600;color:var(--heading);margin-bottom:7px">Line Items</div>'
+    +'<table class="gt"><thead><tr><th>Description</th><th>Qty</th><th style="text-align:right">Rate</th><th style="text-align:right">Amount</th></tr></thead><tbody>'
+    +i.items.map(function(x){return '<tr><td>'+x.desc+'</td><td>'+x.qty+'</td><td style="text-align:right">'+fmt(x.rate)+'</td><td style="text-align:right" class="num grn">'+fmt(x.qty*x.rate)+'</td></tr>';}).join('')+'</tbody></table>'
+    +attSection(i.id),
+    (i.status==='draft'?'<button class="btn btna" onclick="sendInv(\''+id+'\');cM()">Send Invoice</button>':'')
+    +(i.status==='sent'||i.status==='overdue'?'<button class="btn btng" onclick="payInv(\''+id+'\');cM()">Mark as Paid</button>':'')
+    +'<button class="btn" onclick="cM()">Close</button>');
+}
+function sendInv(id){var i=S.invoices.find(function(x){return x.id===id;});if(i){i.status='sent';save('invoices',i);addLog('Sent invoice '+id,'posted');toast('ok','Invoice sent to customer.');setView('invoices');}}
+async function payInv(id){
+  var i=S.invoices.find(function(x){return x.id===id;});if(!i)return;
+  var tot=i.items.reduce(function(s,x){return s+x.qty*x.rate;},0);
+  if(i._sid) await api('PATCH','/api/invoices/'+i._sid,{status:'paid'});
+  i.status='paid';save('invoices',i);
+  var je={id:uid('TXN'),ref:id,desc:'Payment received — '+cn(i.cust),acct:'1000',dr:tot,cr:0,date:today(),status:'posted',by:G.user?G.user.name:'System',att:[],hash:Math.random().toString(16).slice(2,10).toUpperCase(),fy:G.fy};
+  save('txns',je);
+  addLog('Marked invoice '+id+' as paid. Journal entry posted.','posted');
+  toast('ok','Invoice paid. Journal entry posted to General Ledger.');
+  setView('invoices');
+}
+
+// ── CUSTOMERS ─────────────────────────────────────────────────
+function vCusts(){
+  return '<div class="card"><div class="ch"><span class="ct">Customers ('+S.customers.length+')</span><button class="btn btnp btnsm" onclick="showModal(\'cust\')">+ New Customer</button></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Name</th><th>Email</th><th>Country</th><th>Currency</th><th style="text-align:right">Balance</th><th style="text-align:right">Credit Limit</th><th style="text-align:right">YTD Revenue</th><th>NTN</th><th>Status</th></tr></thead><tbody>'
+    +S.customers.map(function(c){return '<tr onclick="openCust(\''+c.id+'\')"><td style="font-weight:500">'+c.name+'</td><td class="mut">'+c.email+'</td><td class="mut">'+c.country+'</td><td class="mut">'+c.cur+'</td><td style="text-align:right" class="num">'+fmt(c.balance)+'</td><td style="text-align:right" class="num">'+fmt(c.credit)+'</td><td style="text-align:right" class="num grn">'+fmt(c.ytd)+'</td><td class="mono">'+c.ntn+'</td><td>'+tag(c.status)+'</td></tr>';}).join('')+'</tbody></table></div></div>';
+}
+function openCust(id){var c=S.customers.find(function(x){return x.id===id;});if(!c)return;openM(c.name,'Customer '+id,'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'+cf('Email',c.email)+cf('Phone',c.phone)+cf('Country',c.country)+cf('Currency',c.cur)+cf('Balance',fmt(c.balance))+cf('Credit Limit',fmt(c.credit))+cf('YTD Revenue',fmt(c.ytd))+cf('NTN',c.ntn||'—')+cf('Since',fmtD(c.since))+cf('Status',tag(c.status))+'</div>','<button class="btn btnp btnsm" onclick="showModal(\'inv\');cM()">New Invoice</button><button class="btn" onclick="cM()">Close</button>');}
+
+// ── BILLS ─────────────────────────────────────────────────────
+function vBills(){
+  return '<div class="card"><div class="ch"><span class="ct">Bills & Accounts Payable ('+S.bills.length+')</span><button class="btn btnp btnsm" onclick="showModal(\'bill\')">+ New Bill</button></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Bill #</th><th>Vendor</th><th>Bill Date</th><th>Due Date</th><th style="text-align:right">Amount</th><th>Account</th><th>Status</th><th></th></tr></thead><tbody>'
+    +S.bills.map(function(b){return '<tr onclick="openBill(\''+b.id+'\')"><td class="mono">'+b.id+'</td><td style="font-weight:500">'+vn(b.vendor)+'</td><td class="mut">'+fmtD(b.date)+'</td><td class="mut '+(b.status==='overdue'?'red':'')+'">'+fmtD(b.due)+'</td><td style="text-align:right" class="num">'+fmt(b.amount)+'</td><td class="mono" style="font-size:11px">'+b.acct+'</td><td>'+tag(b.status)+'</td><td>'+(b.status!=='paid'?'<button class="btn btnsm btng btnxs" onclick="event.stopPropagation();payBill(\''+b.id+'\')">Pay</button>':'')+'</td></tr>';}).join('')+'</tbody></table></div></div>';
+}
+function openBill(id){var b=S.bills.find(function(x){return x.id===id;});if(!b)return;openM('Bill '+id,vn(b.vendor)+' · Due '+fmtD(b.due),'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'+cf('Vendor',vn(b.vendor))+cf('Status',tag(b.status))+cf('Bill Date',fmtD(b.date))+cf('Due Date',fmtD(b.due))+cf('Amount','<span class="red">'+fmt(b.amount)+'</span>')+cf('Account',b.acct)+cf('Reference',b.ref)+'</div>'+attSection(b.id),(b.status!=='paid'?'<button class="btn btng" onclick="payBill(\''+id+'\');cM()">Mark as Paid</button>':'')+'<button class="btn" onclick="cM()">Close</button>');}
+async function payBill(id){
+  var b=S.bills.find(function(x){return x.id===id;});if(!b)return;
+  if(b._sid){var r=await api('PATCH','/api/bills/'+b._sid,{status:'paid'});if(r&&r.ok){b.status='paid';save('bills',b);toast('ok','Bill paid on server.');}else if(!r){b.status='paid';save('bills',b);toast('ok','Paid locally.');}else{toast('er',r.data.error||'Failed.');return;}}
+  else{b.status='paid';save('bills',b);toast('ok','Bill paid.');}
+  var je={id:uid('TXN'),ref:id,desc:'Bill payment — '+vn(b.vendor),acct:'2000',dr:0,cr:b.amount,date:today(),status:'posted',by:G.user?G.user.name:'System',att:[],hash:Math.random().toString(16).slice(2,10).toUpperCase(),fy:G.fy};
+  save('txns',je);addLog('Paid bill '+id+' '+fmt(b.amount)+'. Journal posted.','posted');setView('bills');
+}
+
+// ── VENDORS ───────────────────────────────────────────────────
+function vVends(){
+  return '<div class="card"><div class="ch"><span class="ct">Vendors ('+S.vendors.length+')</span><button class="btn btnp btnsm" onclick="showModal(\'vend\')">+ New Vendor</button></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Category</th><th style="text-align:right">Balance</th><th>Payment Terms</th><th>Status</th></tr></thead><tbody>'
+    +S.vendors.map(function(v){return '<tr onclick="openVend(\''+v.id+'\')"><td style="font-weight:500">'+v.name+'</td><td class="mut">'+v.email+'</td><td class="mut">'+v.phone+'</td><td class="mut">'+v.cat+'</td><td style="text-align:right" class="num">'+fmt(v.balance)+'</td><td class="mut">'+v.terms+'</td><td>'+tag(v.status)+'</td></tr>';}).join('')+'</tbody></table></div></div>';
+}
+function openVend(id){var v=S.vendors.find(function(x){return x.id===id;});if(!v)return;openM(v.name,'Vendor '+id,'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'+cf('Email',v.email)+cf('Phone',v.phone)+cf('Category',v.cat)+cf('Balance','<span class="red">'+fmt(v.balance)+'</span>')+cf('Terms',v.terms)+cf('Status',tag(v.status))+'</div>','<button class="btn btnp btnsm" onclick="showModal(\'bill\');cM()">New Bill</button><button class="btn" onclick="cM()">Close</button>');}
+
+// ── INVENTORY ─────────────────────────────────────────────────
+function vInv(){
+  var low=S.inventory.filter(function(i){return i.status==='low'||i.status==='out';}).length;
+  var totVal=S.inventory.reduce(function(s,i){return s+i.qty*i.cost;},0);
+  return (low?'<div class="banner berr"><span>&#9888;</span><strong>'+low+' items</strong> need restocking — '+(S.inventory.filter(function(i){return i.status==='out';}).length)+' out of stock</div>':"")
+    +'<div class="card"><div class="ch"><span class="ct">Inventory ('+S.inventory.length+' SKUs)</span><span class="mut">Total Value: '+fmt(totVal)+'</span><button class="btn btnp btnsm" onclick="showModal(\'item\')">+ Add Item</button></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>SKU</th><th>Name</th><th>Category</th><th style="text-align:right">Qty</th><th>Unit</th><th style="text-align:right">Unit Cost</th><th style="text-align:right">Total Value</th><th>Reorder At</th><th>Status</th><th></th></tr></thead><tbody>'
+    +S.inventory.map(function(i){return '<tr><td class="mono">'+i.sku+'</td><td style="font-weight:500">'+i.name+'</td><td class="mut">'+i.cat+'</td><td style="text-align:right" class="num '+(i.qty<=i.reorder?'red':'')+'">'+i.qty+'</td><td class="mut">'+i.unit+'</td><td style="text-align:right" class="num">'+fmt(i.cost)+'</td><td style="text-align:right" class="num">'+fmt(i.qty*i.cost)+'</td><td class="mut">'+i.reorder+'</td><td>'+tag(i.status)+'</td><td><button class="btn btnsm btnxs" onclick="adjStock(\''+i.id+'\')">Adjust</button></td></tr>';}).join('')+'</tbody></table></div></div>';
+}
+function adjStock(id){var i=S.inventory.find(function(x){return x.id===id;});if(!i)return;var qty=prompt('Adjust stock for '+i.name+'\nCurrent quantity: '+i.qty+'\nEnter new quantity:');if(qty===null)return;var n=parseInt(qty);if(isNaN(n)||n<0){toast('er','Invalid quantity');return;}i.qty=n;i.status=n===0?'out':n<=i.reorder?'low':'ok';save('inventory',i);addLog('Stock adjusted: '+i.sku+' → '+n+' units','modified');toast('ok','Stock updated to '+n+' units.');}
+
+// ── PROJECTS ──────────────────────────────────────────────────
+function vProj(){
+  return '<div class="card"><div class="ch"><span class="ct">Projects & Job Costing ('+S.projects.length+')</span><button class="btn btnp btnsm" onclick="showModal(\'proj\')">+ New Project</button></div>'
+    +S.projects.map(function(p){var pc=p.budget?Math.round(p.spent/p.budget*100):0;return '<div style="padding:13px 14px;border-bottom:.5px solid var(--bdr)"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px"><div><div style="font-size:13px;font-weight:600;color:var(--heading)">'+p.name+'</div><div class="mut">'+cn(p.client)+' · PM: '+p.pm+' · '+fmtD(p.start)+' → '+fmtD(p.end)+'</div></div>'+tag(p.status)+'</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:8px;font-size:12px"><div><div class="mut">Budget</div><div class="num">'+fmt(p.budget)+'</div></div><div><div class="mut">Spent</div><div class="num red">'+fmt(p.spent)+'</div></div><div><div class="mut">Remaining</div><div class="num '+(p.spent>p.budget?'red':'grn')+'">'+fmt(p.budget-p.spent)+'</div></div><div><div class="mut">Utilised</div><div class="num '+(pc>90?'red':pc>75?'':' grn')+'">'+pc+'%</div></div></div><div class="pbar"><div class="pfill" style="width:'+pc+'%;background:'+(pc>90?'var(--red)':pc>75?'var(--amber)':'var(--green)')+'"></div></div></div>';}).join('')+'</div>';
+}
+
+// ── EXPENSES ──────────────────────────────────────────────────
+function vExp(){
+  var tot=S.expenses.reduce(function(s,e){return s+e.amount;},0);
+  var appr=S.expenses.filter(function(e){return e.status==='approved';}).reduce(function(s,e){return s+e.amount;},0);
+  return '<div class="kg" style="grid-template-columns:repeat(3,1fr)">'
+    +kpi('Total Claims',fmt(tot),S.expenses.length+' claims','')
+    +kpi('Approved',fmt(appr),S.expenses.filter(function(e){return e.status==='approved';}).length+' approved','up')
+    +kpi('Pending',fmt(tot-appr),S.expenses.filter(function(e){return e.status==='pending';}).length+' pending','dn')
+    +'</div>'
+    +'<div class="card"><div class="ch"><span class="ct">Expense Claims</span><button class="btn btnp btnsm" onclick="showModal(\'exp\')">+ New Claim</button></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Employee</th><th>Category</th><th>Date</th><th style="text-align:right">Amount</th><th>Description</th><th>Status</th><th></th></tr></thead><tbody>'
+    +S.expenses.map(function(e){return '<tr><td style="font-weight:500">'+e.emp+'</td><td><span class="tag ty">'+e.cat+'</span></td><td class="mut">'+fmtD(e.date)+'</td><td style="text-align:right" class="num">'+fmt(e.amount)+'</td><td class="mut">'+e.desc+'</td><td>'+tag(e.status)+'</td><td>'+(e.status==='pending'&&G.user&&(G.user.role==='CFO'||G.user.role==='Manager')?'<button class="btn btnsm btng btnxs" onclick="appExp(\''+e.id+'\')">Approve</button>':'')+'</td></tr>';}).join('')+'</tbody></table></div></div>';
+}
+function appExp(id){var e=S.expenses.find(function(x){return x.id===id;});if(e){e.status='approved';save('expenses',e);addLog('Approved expense claim '+id+' by '+e.emp,'approved');toast('ok','Expense claim approved.');setView('expenses');}}
+
+// ── EMPLOYEES ─────────────────────────────────────────────────
+function vEmps(){
+  var depts={};S.employees.forEach(function(e){if(!depts[e.dept])depts[e.dept]=[];depts[e.dept].push(e);});
+  return Object.keys(depts).map(function(dept){
+    return '<div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">'+dept+' Department ('+depts[dept].length+')</span></div>'
+      +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Employee ID</th><th>Full Name</th><th>Designation</th><th>CNIC</th><th>Phone</th><th style="text-align:right">Monthly Salary</th><th>Bank</th><th>Join Date</th><th>Tax No.</th><th>EOBI</th><th>Status</th></tr></thead><tbody>'
+      +depts[dept].map(function(e){return '<tr onclick="openEmp(\''+e.id+'\')"><td class="mono">'+e.id+'</td><td style="font-weight:600">'+e.name+'</td><td class="mut">'+e.role+'</td><td class="mono">'+e.ni+'</td><td class="mut">'+e.phone+'</td><td style="text-align:right" class="num">'+fmt(e.sal)+'</td><td class="mut">'+e.bank+'</td><td class="mut">'+fmtD(e.join)+'</td><td class="mono">'+e.taxno+'</td><td class="mono">'+e.eobi+'</td><td>'+tag(e.status)+'</td></tr>';}).join('')
+      +'</tbody></table></div></div>';
+  }).join('');
+}
+function openEmp(id){
+  var e=S.employees.find(function(x){return x.id===id;});if(!e)return;
+  openM(e.name,e.role+' · '+e.dept,
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+    +cf('Employee ID',e.id)+cf('CNIC',e.ni)+cf('Date of Birth',fmtD(e.dob))+cf('Gender',e.gender)
+    +cf('Email',e.email)+cf('Phone',e.phone)+cf('Department',e.dept)+cf('Designation',e.role)
+    +cf('Join Date',fmtD(e.join))+cf('Monthly Salary',fmt(e.sal))+cf('Annual CTC',fmt(e.sal*12))
+    +cf('Bank',e.bank)+cf('IBAN / Account',e.acct)+cf('Tax Number',e.taxno)+cf('EOBI Number',e.eobi)+cf('Status',tag(e.status))
+    +'</div>',
+    '<button class="btn" onclick="cM()">Close</button>');
+}
+
+// ── PAYROLL ENGINE ────────────────────────────────────────────
+function vPayroll(){
+  var gross=S.employees.reduce(function(s,e){return s+e.sal;},0);
+  return '<div class="kg" style="grid-template-columns:repeat(3,1fr)">'
+    +kpi('Active Headcount',S.employees.length,'employees','')
+    +kpi('Monthly Gross Payroll',fmtM(gross),'total','')
+    +kpi('Annual Payroll Outlay',fmtM(gross*12),'projected','')
+    +'</div>'
+    +'<div class="card"><div class="ch"><span class="ct">Payroll Engine</span><button class="btn btna btnsm" onclick="runPayroll()">&#9654; Run Payroll</button></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Run ID</th><th>Period</th><th>Date</th><th style="text-align:right">Gross</th><th style="text-align:right">Income Tax (10%)</th><th style="text-align:right">EOBI (1%)</th><th style="text-align:right">Net Pay</th><th>Approved By</th><th>Status</th><th></th></tr></thead><tbody>'
+    +S.payrolls.map(function(p){return '<tr><td class="mono">'+p.id+'</td><td style="font-weight:500">'+p.period+'</td><td class="mut">'+fmtD(p.date)+'</td><td style="text-align:right" class="num">'+fmt(p.gross)+'</td><td style="text-align:right" class="num red">'+fmt(p.tax)+'</td><td style="text-align:right" class="num red">'+fmt(p.eobi)+'</td><td style="text-align:right" class="num grn">'+fmt(p.net)+'</td><td class="mut">'+(p.approvedBy||'—')+'</td><td>'+tag(p.status)+'</td><td>'+(p.status==='review'&&G.user&&(G.user.role==='CFO'||G.user.role==='Manager')?'<button class="btn btnsm btng btnxs" onclick="appPayroll(\''+p.id+'\')">Approve</button>':'')+'</td></tr>';}).join('')
+    +'</tbody></table></div>'
+    +'<div class="ch" style="border-top:.5px solid var(--bdr)"><span class="ct">Monthly Payroll Register</span></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Employee</th><th>Department</th><th style="text-align:right">Basic Salary</th><th style="text-align:right">Income Tax 10%</th><th style="text-align:right">EOBI 1%</th><th style="text-align:right">Net Pay</th></tr></thead><tbody>'
+    +S.employees.map(function(e){var tx=Math.round(e.sal*.10),eo=Math.round(e.sal*.01),net=e.sal-tx-eo;return '<tr><td style="font-weight:600">'+e.name+'</td><td class="mut">'+e.dept+'</td><td style="text-align:right" class="num">'+fmt(e.sal)+'</td><td style="text-align:right" class="num red">'+fmt(tx)+'</td><td style="text-align:right" class="num red">'+fmt(eo)+'</td><td style="text-align:right" class="num grn">'+fmt(net)+'</td></tr>';}).join('')
+    +'<tr style="background:var(--card2);font-weight:700"><td>TOTAL</td><td></td><td style="text-align:right" class="num">'+fmt(gross)+'</td><td style="text-align:right" class="num red">'+fmt(Math.round(gross*.10))+'</td><td style="text-align:right" class="num red">'+fmt(Math.round(gross*.01))+'</td><td style="text-align:right" class="num grn">'+fmt(Math.round(gross*.89))+'</td></tr>'
+    +'</tbody></table></div></div>';
+}
+function runPayroll(){
+  var gross=S.employees.reduce(function(s,e){return s+e.sal;},0);
+  var tx=Math.round(gross*.10),eo=Math.round(gross*.01),net=gross-tx-eo;
+  var mon=new Date().toLocaleString('en-GB',{month:'long',year:'numeric'});
+  var pr={id:uid('PR'),period:mon,date:today(),gross:gross,tax:tx,eobi:eo,net:net,status:'review',approvedBy:null,fy:G.fy};
+  save('payrolls',pr);
+  var je={id:uid('TXN'),ref:pr.id,desc:'Payroll Run — '+mon,acct:'6010',dr:gross,cr:0,date:today(),status:'review',by:G.user?G.user.name:'System',att:[],hash:Math.random().toString(16).slice(2,10).toUpperCase(),fy:G.fy};
+  save('txns',je);
+  addLog('Payroll run created for '+mon+'. Pending approval.','posted');
+  toast('ok','Payroll submitted for '+mon+'. Journal entry created. Awaiting CFO/Manager approval.');
+}
+function appPayroll(id){var p=S.payrolls.find(function(x){return x.id===id;});if(p){p.status='paid';p.approvedBy=G.user?G.user.name:'Admin';save('payrolls',p);addLog('Approved & processed payroll '+id,'approved');toast('ok','Payroll approved and processed.');setView('payroll');}}
+
+// ── AUDIT TRAIL ───────────────────────────────────────────────
+function vAudit(){
+  var sorted=S.audit.slice().sort(function(a,b){return b.id<a.id?-1:1;});
+  return '<div class="card"><div class="ch"><span class="ct">Immutable Audit Trail ('+sorted.length+' entries)</span><div class="audbadge"><span class="pdot"></span>Tamper-evident hashing</div></div>'
+    +'<div style="overflow-x:auto"><table class="gt"><thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Type</th><th>Hash</th></tr></thead><tbody>'
+    +sorted.map(function(a){return '<tr><td class="mut" style="white-space:nowrap">'+a.time+'</td><td style="font-weight:600">'+a.actor+'</td><td style="font-size:12px">'+a.action+'</td><td>'+tag(a.type)+'</td><td class="mono">'+a.hash+'</td></tr>';}).join('')+'</tbody></table></div></div>';
+}
+
+// ── COMPANY INFO ──────────────────────────────────────────────
+function vCompany(){
+  var c=co();
+  return '<div class="card"><div class="ch"><span class="ct">Company Information</span></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:13px 14px">'
+    +cf('Company Name',c.name)+cf('NTN',c.ntn)+cf('STRN',c.strn)+cf('Industry',c.industry)
+    +cf('Registered Address',c.addr)+cf('Phone',c.phone)+cf('Email',c.email)+cf('Website',c.website||'—')
+    +cf('CEO / Managing Director',c.ceo)+cf('Chief Financial Officer',c.cfo)+cf('External Auditor',c.auditor)
+    +cf('Fiscal Year Start',c.fy)+cf('Base Currency',c.cur)+cf('Year Established',c.est)
+    +'</div></div>'
+    +'<div class="card"><div class="ch"><span class="ct">System Controls & Capabilities</span></div>'
+    +[['IndexedDB Persistence','Data survives refresh, restart and browser close','tg'],
+      ['Auto-Login Session (7 days)','Stored in localStorage — re-login not needed','tg'],
+      ['Automated Depreciation Engine','Posts journal entries automatically on run','tg'],
+      ['Live Currency Rates','ExchangeRate-API — PKR/USD/GBP/AED/EUR','tg'],
+      ['Payroll Engine','Auto journal entries on run, approval workflow','tg'],
+      ['Double-Entry Journal Posting','Every transaction posts Dr and Cr entries','tg'],
+      ['Immutable Audit Trail','Every action logged with tamper-evident hash','tg'],
+      ['Role-Based Access Control','CFO / Accountant / Auditor / Manager / Viewer','tg'],
+      ['IFRS Financial Statements','SOFP / SPNL / SOCE / SOCF — FY-aware','tg'],
+      ['Prior Year Analysis','3-year KPIs, ratios, visual chart','tg'],
+      ['Multi-Currency Support','PKR / USD / AED / GBP — live rates','tg'],
+      ['JSON Data Export','Full data export from Settings','tg'],
+    ].map(function(r){return '<div class="srow"><span class="slbl">'+r[0]+'</span><div><div style="font-size:11.5px;color:var(--heading);font-weight:500">'+r[1]+'</div></div><span class="tag '+r[2]+'" style="flex-shrink:0">Active</span></div>';}).join('')
+    +'</div>';
+}
+
+// ── SETTINGS ──────────────────────────────────────────────────
+function vSettings(){
+  return '<div class="g2"><div class="card"><div class="ch"><span class="ct">Preferences</span></div>'
+    +'<div class="srow"><span class="slbl">Date Format</span><span class="sval">DD-MMM-YYYY</span></div>'
+    +'<div class="srow"><span class="slbl">Number Format</span><span class="sval">1,23,456 (Pakistani)</span></div>'
+    +'<div class="srow"><span class="slbl">Timezone</span><span class="sval">Asia/Karachi (PKT +5)</span></div>'
+    +'<div class="srow"><span class="slbl">Fiscal Year</span><span class="sval"><select class="inp" style="font-size:11px;padding:3px 7px" onchange="G.fy=this.value;setView(G.view)"><option value="2026">FY 2025-26</option><option value="2025">FY 2024-25</option><option value="2024">FY 2023-24</option></select></span></div>'
+    +'</div>'
+    +'<div class="card"><div class="ch"><span class="ct">Data Management</span></div>'
+    +'<div class="srow"><span class="slbl">Reset to Seed Data</span><span><button class="btn btnr btnsm" onclick="resetDB()">Reset Database</button></span></div>'
+    +'<div class="srow"><span class="slbl">Refresh Currency Rates</span><span><button class="btn btnsm" onclick="fetchRates()">Fetch Live Rates</button></span></div>'
+    +'<div class="srow"><span class="slbl">Export All Data (JSON)</span><span><button class="btn btnsm" onclick="exportData()">Export JSON</button></span></div>'
+    +'<div class="srow"><span class="slbl">Restore from Backup (JSON)</span><span><input type="file" id="restore-file" accept="application/json" style="display:none" onchange="importData(this.files[0])"/><button class="btn btnsm" onclick="document.getElementById(&apos;restore-file&apos;).click()">Restore JSON</button></span></div>'
+    +'<div class="srow"><span class="slbl">Clear Audit Trail</span><span><button class="btn btnr btnsm" onclick="clearAudit()">Clear Log</button></span></div>'
+    +'</div>'
+    +'<div class="card"><div class="ch"><span class="ct">&#8635; Backend Server</span></div>'
+    +'<div class="srow"><span class="slbl">Server URL</span>'
+    +'<span style="flex:1;margin:0 8px"><input class="inp" id="srv-url" style="width:260px"/></span>'
+    +'<button class="btn btnsm btnp" onclick="saveServerUrl()">Save &amp; Sync</button></div>'
+    +'<div class="srow"><span class="slbl">Status</span><span id="conn-stat" class="tag tm">Checking...</span></div>'
+    +'<div class="srow"><span class="slbl">Force Sync</span><span><button class="btn btnsm" onclick="manualSync()">Pull from Server</button></span></div>'
+    +'</div></div>';
+  // Set input value after render (avoids quote escaping issue)
+  setTimeout(function(){
+    var inp=document.getElementById('srv-url');
+    if(inp) inp.value=API_URL;
+    var el0=document.getElementById('conn-stat');
+    if(!API_URL){ if(el0) el0.outerHTML='<span class="tag tm">Local-only mode (no server set)</span>'; return; }
+    api('GET','/health').then(function(r){
+      var el=document.getElementById('conn-stat');
+      if(!el)return;
+      if(r&&r.ok) el.outerHTML='<span class="tag tg">&#10003; Connected — v'+r.data.version+'</span>';
+      else el.outerHTML='<span class="tag tr">&#10005; Offline — server not reachable</span>';
+    });
+  },300);
+}
+function resetDB(){
+  if(!confirm('Reset all data to default seed values? This cannot be undone.'))return;
+  var tx=DB.transaction(STORES,'readwrite');
+  STORES.forEach(function(s){tx.objectStore(s).clear();});
+  tx.oncomplete=function(){seedIfEmpty(function(){loadAll(function(){toast('ok','Database reset to seed data.');setView('dashboard');});});};
+}
+function exportData(){
+  var out={};Object.keys(S).forEach(function(k){out[k]=S[k];});
+  var b=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='aqsam-export-'+today()+'.json';a.click();
+  toast('ok','Data exported successfully.');
+}
+function importData(file){
+  if(!file){return;}
+  if(!confirm('Restore from this backup? This will overwrite all current data.'))return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var data;
+    try{ data=JSON.parse(e.target.result); }catch(err){ toast('er','Invalid backup file.'); return; }
+    var tx=DB.transaction(STORES,'readwrite');
+    STORES.forEach(function(s){ tx.objectStore(s).clear(); });
+    tx.oncomplete=function(){
+      var writes=STORES.filter(function(s){return Array.isArray(data[s]);}).map(function(s){
+        return new Promise(function(res){
+          var t=DB.transaction(s,'readwrite'),os=t.objectStore(s);
+          data[s].forEach(function(rec){ os.put(rec); });
+          t.oncomplete=res;
+        });
+      });
+      Promise.all(writes).then(function(){
+        loadAll(function(){ toast('ok','Backup restored successfully.'); setView('dashboard'); });
+      });
+    };
+  };
+  reader.readAsText(file);
+}
+function clearAudit(){if(!confirm('Clear audit trail?'))return;S.audit=[];var tx=DB.transaction('audit','readwrite');tx.objectStore('audit').clear();tx.oncomplete=function(){toast('ok','Audit trail cleared.');setView('settings');};}
+
+// ── MODALS ────────────────────────────────────────────────────
+function showModal(type){
+  var coaOpts=COA.map(function(a){return '<option value="'+a.code+'">'+a.code+' — '+a.name+'</option>';}).join('');
+  var custOpts=S.customers.map(function(c){return '<option value="'+c.id+'">'+c.name+'</option>';}).join('');
+  var vendOpts=S.vendors.map(function(v){return '<option value="'+v.id+'">'+v.name+'</option>';}).join('');
+  var expAcctOpts=COA.filter(function(a){return a.type==='Expense';}).map(function(a){return '<option value="'+a.code+'">'+a.code+' — '+a.name+'</option>';}).join('');
+  var T={
+    quick:{w:440,title:'New Entry',sub:'Choose what to create',
+      body:'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px">'
+        +[['Invoice','&#9671;','invoices'],['Bill','&#9672;','bills'],['Journal Entry','&#9998;','journals'],['Customer','&#9426;','customers'],['Vendor','&#9673;','vendors'],['Employee','&#9719;','employees'],['Inventory Item','&#9638;','inventory'],['Expense Claim','&#8853;','expenses'],['Fixed Asset','&#9635;','far']]
+        .map(function(x){return '<div style="padding:11px 8px;border:.5px solid var(--bdr);border-radius:8px;cursor:pointer;text-align:center;transition:background .1s" onmouseover="this.style.background=\'var(--slate)\'" onmouseout="this.style.background=\'\'" onclick="cM();setView(\''+x[2]+'\')" ><div style="font-size:20px;margin-bottom:4px">'+x[1]+'</div><div style="font-size:11.5px;font-weight:600;color:var(--heading)">'+x[0]+'</div></div>';}).join('')+'</div>',
+      foot:'<button class="btn" onclick="cM()">Cancel</button>'},
+    je:{title:'New Journal Entry',sub:'Double-entry — Debit must equal Credit',
+      body:'<div class="fg" style="gap:11px"><div class="fr"><label>Description / Memo</label><input class="inp inplg" id="jd" placeholder="e.g. June rent payment — Office"/></div><div class="fg fg2"><div class="fr"><label>Debit Account</label><select class="inp" id="jdr">'+coaOpts+'</select></div><div class="fr"><label>Credit Account</label><select class="inp" id="jcr">'+coaOpts+'</select></div></div><div class="fg fg2"><div class="fr"><label>Amount (PKR)</label><input class="inp" id="jamt" type="number" placeholder="0" min="0"/></div><div class="fr"><label>Date</label><input class="inp" id="jdate" type="date" value="'+today()+'"/></div></div><div class="fr"><label>Notes (optional)</label><textarea class="inp" id="jnotes" placeholder="Reference, narration..."></textarea></div></div>',
+      foot:'<button class="btn btnp" onclick="postJE()">Post Journal Entry</button><button class="btn" onclick="cM()">Cancel</button>'},
+    inv:{title:'New Invoice',sub:'Create & send to customer',
+      body:'<div class="fg" style="gap:11px"><div class="fg fg2"><div class="fr"><label>Customer</label><select class="inp" id="iv-c">'+custOpts+'</select></div><div class="fr"><label>Currency</label><select class="inp" id="iv-cur"><option>PKR</option><option>USD</option><option>AED</option><option>GBP</option></select></div></div><div class="fg fg2"><div class="fr"><label>Invoice Date</label><input class="inp" id="iv-dt" type="date" value="'+today()+'"/></div><div class="fr"><label>Due Date</label><input class="inp" id="iv-dd" type="date"/></div></div><div class="fr"><label>Line Item Description</label><input class="inp inplg" id="iv-desc" placeholder="Service or product description"/></div><div class="fg fg2"><div class="fr"><label>Quantity</label><input class="inp" id="iv-qty" type="number" value="1" min="1"/></div><div class="fr"><label>Unit Rate (PKR)</label><input class="inp" id="iv-rate" type="number" placeholder="0" min="0"/></div></div><div class="fr"><label>Notes / Payment Terms</label><input class="inp" id="iv-notes" placeholder="e.g. Due on receipt. Bank: HBL..."/></div></div>',
+      foot:'<button class="btn btnp" onclick="createInv(false)">Save Draft</button><button class="btn btna" onclick="createInv(true)">Save & Send</button><button class="btn" onclick="cM()">Cancel</button>'},
+    bill:{title:'New Bill',sub:'Record vendor bill / AP entry',
+      body:'<div class="fg" style="gap:11px"><div class="fg fg2"><div class="fr"><label>Vendor</label><select class="inp" id="bl-v">'+vendOpts+'</select></div><div class="fr"><label>Bill Date</label><input class="inp" id="bl-dt" type="date" value="'+today()+'"/></div></div><div class="fg fg2"><div class="fr"><label>Amount (PKR)</label><input class="inp" id="bl-amt" type="number" placeholder="0" min="0"/></div><div class="fr"><label>Due Date</label><input class="inp" id="bl-dd" type="date"/></div></div><div class="fg fg2"><div class="fr"><label>Expense Account</label><select class="inp" id="bl-acct">'+expAcctOpts+'</select></div><div class="fr"><label>Reference / PO #</label><input class="inp" id="bl-ref" placeholder="PO-0001"/></div></div></div>',
+      foot:'<button class="btn btnp" onclick="createBill()">Save Bill</button><button class="btn" onclick="cM()">Cancel</button>'},
+    cust:{title:'New Customer',sub:'Add to CRM',
+      body:'<div class="fg" style="gap:11px"><div class="fr"><label>Company / Customer Name</label><input class="inp inplg" id="cu-n" placeholder="Company name"/></div><div class="fg fg2"><div class="fr"><label>Email</label><input class="inp" id="cu-e" type="email"/></div><div class="fr"><label>Phone</label><input class="inp" id="cu-p"/></div></div><div class="fg fg2"><div class="fr"><label>Country</label><select class="inp" id="cu-c"><option>Pakistan</option><option>UAE</option><option>Saudi Arabia</option><option>UK</option><option>USA</option><option>Other</option></select></div><div class="fr"><label>Currency</label><select class="inp" id="cu-cur"><option>PKR</option><option>USD</option><option>AED</option><option>GBP</option></select></div></div><div class="fg fg2"><div class="fr"><label>Credit Limit (PKR)</label><input class="inp" id="cu-cl" type="number" placeholder="0"/></div><div class="fr"><label>NTN</label><input class="inp" id="cu-ntn" placeholder="NTN-xxxxxxx"/></div></div></div>',
+      foot:'<button class="btn btnp" onclick="createCust()">Save Customer</button><button class="btn" onclick="cM()">Cancel</button>'},
+    vend:{title:'New Vendor',sub:'Add supplier to Accounts Payable',
+      body:'<div class="fg" style="gap:11px"><div class="fr"><label>Vendor / Supplier Name</label><input class="inp inplg" id="vd-n" placeholder="Vendor name"/></div><div class="fg fg2"><div class="fr"><label>Email</label><input class="inp" id="vd-e" type="email"/></div><div class="fr"><label>Phone</label><input class="inp" id="vd-p"/></div></div><div class="fg fg2"><div class="fr"><label>Category</label><select class="inp" id="vd-c"><option>Logistics</option><option>IT</option><option>Admin</option><option>Marketing</option><option>Raw Material</option><option>Utilities</option><option>Other</option></select></div><div class="fr"><label>Payment Terms</label><select class="inp" id="vd-t"><option>Net 15</option><option>Net 30</option><option>Net 60</option><option>COD</option><option>Advance</option></select></div></div></div>',
+      foot:'<button class="btn btnp" onclick="createVend()">Save Vendor</button><button class="btn" onclick="cM()">Cancel</button>'},
+    emp:{title:'New Employee',sub:'Add to HR register',
+      body:'<div class="fg" style="gap:11px"><div class="fg fg2"><div class="fr"><label>Full Name</label><input class="inp inplg" id="em-n" placeholder="Full name"/></div><div class="fr"><label>CNIC</label><input class="inp" id="em-ni" placeholder="12345-1234567-1"/></div></div><div class="fg fg2"><div class="fr"><label>Email</label><input class="inp" id="em-e" type="email"/></div><div class="fr"><label>Phone</label><input class="inp" id="em-ph"/></div></div><div class="fg fg2"><div class="fr"><label>Department</label><select class="inp" id="em-d"><option>Finance</option><option>Audit</option><option>Logistics</option><option>Marketing</option><option>HR</option><option>IT</option><option>Operations</option></select></div><div class="fr"><label>Designation</label><input class="inp" id="em-r" placeholder="e.g. Senior Accountant"/></div></div><div class="fg fg2"><div class="fr"><label>Monthly Salary (PKR)</label><input class="inp" id="em-s" type="number" placeholder="0"/></div><div class="fr"><label>Join Date</label><input class="inp" id="em-j" type="date" value="'+today()+'"/></div></div><div class="fg fg2"><div class="fr"><label>Bank Name</label><input class="inp" id="em-b" placeholder="HBL / MCB / UBL"/></div><div class="fr"><label>IBAN / Account No.</label><input class="inp" id="em-a" placeholder="PK36HBLC..."/></div></div></div>',
+      foot:'<button class="btn btnp" onclick="createEmp()">Add Employee</button><button class="btn" onclick="cM()">Cancel</button>'},
+    item:{title:'New Inventory Item',sub:'Add SKU to stock',
+      body:'<div class="fg" style="gap:11px"><div class="fg fg2"><div class="fr"><label>Item Name</label><input class="inp inplg" id="it-n" placeholder="Item name"/></div><div class="fr"><label>SKU Code</label><input class="inp" id="it-s" placeholder="STTN-001"/></div></div><div class="fg fg2"><div class="fr"><label>Category</label><select class="inp" id="it-c"><option>Stationery</option><option>IT Equipment</option><option>Furniture</option><option>Raw Material</option><option>Packaging</option><option>Other</option></select></div><div class="fr"><label>Unit of Measure</label><select class="inp" id="it-u"><option>unit</option><option>ream</option><option>box</option><option>kg</option><option>litre</option><option>metre</option></select></div></div><div class="fg fg3"><div class="fr"><label>Opening Qty</label><input class="inp" id="it-q" type="number" value="0" min="0"/></div><div class="fr"><label>Unit Cost (PKR)</label><input class="inp" id="it-co" type="number" placeholder="0" min="0"/></div><div class="fr"><label>Reorder Level</label><input class="inp" id="it-r" type="number" value="5" min="0"/></div></div></div>',
+      foot:'<button class="btn btnp" onclick="createItem()">Add Item</button><button class="btn" onclick="cM()">Cancel</button>'},
+    exp:{title:'New Expense Claim',sub:'Submit for approval and reimbursement',
+      body:'<div class="fg" style="gap:11px"><div class="fg fg2"><div class="fr"><label>Category</label><select class="inp" id="ex-c"><option>Travel</option><option>Fuel & Toll</option><option>Marketing</option><option>Training & CPD</option><option>Meals & Entertainment</option><option>Office Supplies</option><option>Other</option></select></div><div class="fr"><label>Amount (PKR)</label><input class="inp" id="ex-a" type="number" placeholder="0" min="0"/></div></div><div class="fr"><label>Description</label><input class="inp inplg" id="ex-d" placeholder="Brief description of expense"/></div><div class="fr"><label>Date of Expense</label><input class="inp" id="ex-dt" type="date" value="'+today()+'"/></div></div>',
+      foot:'<button class="btn btnp" onclick="createExp()">Submit Claim</button><button class="btn" onclick="cM()">Cancel</button>'},
+    proj:{title:'New Project',sub:'Set up job costing and budget tracking',
+      body:'<div class="fg" style="gap:11px"><div class="fr"><label>Project Name</label><input class="inp inplg" id="pj-n" placeholder="Project name"/></div><div class="fg fg2"><div class="fr"><label>Client</label><select class="inp" id="pj-c">'+custOpts+'</select></div><div class="fr"><label>Project Manager</label><input class="inp" id="pj-pm" placeholder="Manager name"/></div></div><div class="fg fg3"><div class="fr"><label>Budget (PKR)</label><input class="inp" id="pj-b" type="number" placeholder="0"/></div><div class="fr"><label>Start Date</label><input class="inp" id="pj-s" type="date" value="'+today()+'"/></div><div class="fr"><label>End Date</label><input class="inp" id="pj-e" type="date"/></div></div></div>',
+      foot:'<button class="btn btnp" onclick="createProj()">Create Project</button><button class="btn" onclick="cM()">Cancel</button>'},
+    asset:{title:'New Fixed Asset',sub:'Add to Fixed Asset Register',
+      body:'<div class="fg" style="gap:11px"><div class="fr"><label>Asset Description</label><input class="inp inplg" id="as-d" placeholder="e.g. Production Machinery Line C"/></div><div class="fg fg2"><div class="fr"><label>Category</label><select class="inp" id="as-cat"><option>Buildings</option><option>Plant & Machinery</option><option>Vehicles</option><option>Furniture</option><option>IT Equipment</option><option>Other</option></select></div><div class="fr"><label>Location</label><input class="inp" id="as-loc" placeholder="e.g. Factory Floor 3"/></div></div><div class="fg fg2"><div class="fr"><label>Date Acquired</label><input class="inp" id="as-acq" type="date" value="'+today()+'"/></div><div class="fr"><label>Cost (PKR)</label><input class="inp" id="as-cost" type="number" placeholder="0" min="0"/></div></div><div class="fg fg3"><div class="fr"><label>Useful Life (Yrs)</label><input class="inp" id="as-life" type="number" placeholder="10"/></div><div class="fr"><label>Method</label><select class="inp" id="as-meth"><option>SLM</option><option>WDV</option></select></div><div class="fr"><label>Annual Rate %</label><input class="inp" id="as-rate" type="number" placeholder="10"/></div></div></div>',
+      foot:'<button class="btn btnp" onclick="createAsset()">Add Asset</button><button class="btn" onclick="cM()">Cancel</button>'},
+  };
+  var cfg=T[type]||T.quick;
+  E('modal').style.maxWidth=(cfg.w||620)+'px';
+  openM(cfg.title,cfg.sub,cfg.body,cfg.foot);
+}
+
+// ── CREATE FUNCTIONS ──────────────────────────────────────────
+async function postJE(){
+  var desc=gv('jd'),dr=gv('jdr'),cr=gv('jcr'),amt=parseFloat(gv('jamt'))||0,dt=gv('jdate')||today(),notes=gv('jnotes');
+  if(!desc||!amt){toast('er','Fill description and amount.');return;}
+  var jid=uid('JRN');
+  save('journals',{id:jid,desc:desc,dr_acct:dr,cr_acct:cr,amount:amt,date:dt,notes:notes,status:'posted',by:G.user?G.user.name:'System'});
+  var base={date:dt,status:'posted',by:G.user?G.user.name:'System',att:[],hash:Math.random().toString(16).slice(2,10).toUpperCase(),fy:G.fy};
+  save('txns',Object.assign({},base,{id:uid('TXN'),ref:jid,desc:desc+' (Dr: '+dr+')',acct:dr,dr:amt,cr:0}));
+  save('txns',Object.assign({},base,{id:uid('TXN'),ref:jid,desc:desc+' (Cr: '+cr+')',acct:cr,dr:0,cr:amt}));
+  var r=await api('POST','/api/transactions',{description:desc,account:dr,amount:amt,type:'expense',txn_date:dt,fy_year:G.fy,note:notes});
+  addLog('Posted journal '+jid+' Dr:'+dr+' Cr:'+cr+' Rs '+fmt(amt),'posted');
+  toast('ok',r&&r.ok?'Journal posted to server — '+r.data.ref:'Journal posted locally'+(r?'':' (offline)')+'. Dr & Cr created.');cM();
+}
+async function createInv(send){
+  var desc=gv('iv-desc'),qty=parseFloat(gv('iv-qty'))||1,rate=parseFloat(gv('iv-rate'))||0,cid=gv('iv-c'),dt=gv('iv-dt'),dd=gv('iv-dd'),cur=gv('iv-cur'),notes=gv('iv-notes');
+  if(!desc||!rate){toast('er','Fill description and rate.');return;}
+  var custObj=S.customers.find(function(c){return c.id==cid;});
+  var cDbId=custObj&&custObj._sid?custObj._sid:cid||1;
+  var r=await api('POST','/api/invoices',{customer_id:cDbId,issue_date:dt,due_date:dd,currency:cur,notes:notes,items:[{description:desc,qty:qty,unit_price:rate,tax_pct:0}]});
+  var id;
+  if(r&&r.ok){id=r.data.ref;save('invoices',{id:id,cust:cid,date:dt,due:dd,items:[{desc:desc,qty:qty,rate:rate}],status:send?'sent':'draft',cur:cur,att:[],notes:notes,_sid:r.data.id});if(send)await api('PATCH','/api/invoices/'+r.data.id,{status:'sent'});toast('ok','Invoice '+id+(send?' sent':' drafted')+' on server.');}
+  else{id=uid('INV');save('invoices',{id:id,cust:cid,date:dt,due:dd,items:[{desc:desc,qty:qty,rate:rate}],status:send?'sent':'draft',cur:cur,att:[],notes:notes});toast('ok','Invoice '+id+' saved locally.');}
+  addLog((send?'Sent':'Drafted')+' invoice '+id+' '+fmt(qty*rate),'posted');cM();setView('invoices');
+}
+async function createBill(){
+  var amt=parseFloat(gv('bl-amt'))||0,vid=gv('bl-v'),dt=gv('bl-dt'),dd=gv('bl-dd'),acct=gv('bl-acct'),ref=gv('bl-ref');
+  if(!amt){toast('er','Enter amount.');return;}
+  var vendObj=S.vendors.find(function(v){return v.id==vid;});
+  var vDbId=vendObj&&vendObj._sid?vendObj._sid:vid||1;
+  var r=await api('POST','/api/bills',{vendor_id:vDbId,bill_date:dt,due_date:dd,amount:amt,account:acct,notes:ref});
+  var id;
+  if(r&&r.ok){id=r.data.ref;save('bills',{id:id,vendor:vid,date:dt,due:dd,amount:amt,status:'pending',acct:acct,ref:ref,att:[],notes:'',_sid:r.data.id});toast('ok','Bill '+id+' on server.');}
+  else{id=uid('BILL');save('bills',{id:id,vendor:vid,date:dt,due:dd,amount:amt,status:'pending',acct:acct,ref:ref,att:[],notes:''});toast('ok','Bill saved locally.');}
+  addLog('Recorded bill '+id+' '+fmt(amt),'posted');cM();setView('bills');
+}
+function createCust(){
+  var name=gv('cu-n');if(!name){toast('er','Enter customer name.');return;}
+  var c={id:uid('C'),name:name,email:gv('cu-e'),phone:gv('cu-p'),country:gv('cu-c'),cur:gv('cu-cur'),balance:0,status:'active',credit:parseFloat(gv('cu-cl'))||0,ytd:0,since:today(),ntn:gv('cu-ntn')};
+  save('customers',c);addLog('Added customer '+name,'posted');toast('ok','Customer added.');cM();setView('customers');
+}
+function createVend(){
+  var name=gv('vd-n');if(!name){toast('er','Enter vendor name.');return;}
+  save('vendors',{id:uid('V'),name:name,email:gv('vd-e'),phone:gv('vd-p'),balance:0,status:'active',cat:gv('vd-c'),terms:gv('vd-t')});
+  addLog('Added vendor '+name,'posted');toast('ok','Vendor added.');cM();setView('vendors');
+}
+function createEmp(){
+  var name=gv('em-n');if(!name){toast('er','Enter employee name.');return;}
+  save('employees',{id:uid('EMP'),name:name,ni:gv('em-ni'),email:gv('em-e'),phone:gv('em-ph'),dob:'',gender:'',dept:gv('em-d'),role:gv('em-r'),join:gv('em-j'),sal:parseFloat(gv('em-s'))||0,bank:gv('em-b'),acct:gv('em-a'),taxno:'Pending',eobi:'Pending',status:'active'});
+  addLog('Added employee '+name,'posted');toast('ok','Employee added to HR.');cM();setView('employees');
+}
+function createItem(){
+  var name=gv('it-n');if(!name){toast('er','Enter item name.');return;}
+  var qty=parseInt(gv('it-q'))||0,reorder=parseInt(gv('it-r'))||5;
+  save('inventory',{id:uid('ITM'),name:name,sku:gv('it-s'),cat:gv('it-c'),qty:qty,cost:parseFloat(gv('it-co'))||0,reorder:reorder,unit:gv('it-u'),status:qty===0?'out':qty<=reorder?'low':'ok'});
+  addLog('Added inventory item '+name,'posted');toast('ok','Item added to inventory.');cM();setView('inventory');
+}
+function createExp(){
+  var amt=parseFloat(gv('ex-a'))||0,desc=gv('ex-d');
+  if(!desc||!amt){toast('er','Fill amount and description.');return;}
+  save('expenses',{id:uid('EXP'),emp:G.user?G.user.name:'Unknown',cat:gv('ex-c'),amount:amt,date:gv('ex-dt'),desc:desc,status:'pending',proj:''});
+  addLog('Expense claim submitted '+fmt(amt),'posted');toast('ok','Claim submitted for approval.');cM();setView('expenses');
+}
+function createProj(){
+  var name=gv('pj-n');if(!name){toast('er','Enter project name.');return;}
+  save('projects',{id:uid('PRJ'),name:name,client:gv('pj-c'),budget:parseFloat(gv('pj-b'))||0,spent:0,status:'active',start:gv('pj-s'),end:gv('pj-e'),pm:gv('pj-pm')});
+  addLog('Created project '+name,'posted');toast('ok','Project created.');cM();setView('projects');
+}
+function createAsset(){
+  var desc=gv('as-d'),cost=parseFloat(gv('as-cost'))||0;if(!desc||!cost){toast('er','Fill description and cost.');return;}
+  var rate=parseFloat(gv('as-rate'))||10;
+  var dyr=Math.round(cost*rate/100);
+  save('assets',{id:uid('FA'),desc:desc,cat:gv('as-cat'),acq:gv('as-acq'),cost:cost,life:parseInt(gv('as-life'))||10,method:gv('as-meth'),rate:rate,adop:0,dyr:dyr,adcl:dyr,nbv:cost-dyr,loc:gv('as-loc'),status:'active'});
+  addLog('Added fixed asset: '+desc,'posted');toast('ok','Asset added to Fixed Asset Register.');cM();setView('far');
+}
+
+// ── BOOT ──────────────────────────────────────────────────────
+(function(){var s=localStorage.getItem('aqsam_api');if(s){API_URL=s;var db=document.getElementById('db-badge');if(db)db.textContent='IndexedDB + Server';}})();
+function toggleDark(){
+  var on=document.documentElement.getAttribute('data-theme')==='dark';
+  if(on){document.documentElement.removeAttribute('data-theme');localStorage.setItem('aqsam_theme','light');var b=E('dmtoggle');if(b)b.innerHTML='&#9790;';}
+  else{document.documentElement.setAttribute('data-theme','dark');localStorage.setItem('aqsam_theme','dark');var b2=E('dmtoggle');if(b2)b2.innerHTML='&#9728;';}
+  if(G.view==='dashboard')setTimeout(function(){setView('dashboard');},80);
+}
+function applyTheme(){
+  var t=localStorage.getItem('aqsam_theme');
+  if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');setTimeout(function(){var b=E('dmtoggle');if(b)b.innerHTML='&#9728;';},300);}
+}
+applyTheme();
+initDB(function(){tryAutoLogin();});
+// ── Server settings helpers (avoids quote-in-string issues) ──
+function saveServerUrl(){
+  var inp=document.getElementById('srv-url');
+  if(!inp||!inp.value.trim()){toast('er','Enter a valid server URL.');return;}
+  API_URL=inp.value.trim();
+  localStorage.setItem('aqsam_api',API_URL);
+  var db=document.getElementById('db-badge'); if(db) db.textContent='IndexedDB + Server';
+  toast('ok','Server URL saved. Syncing...');
+  _syncFromServer();
+  _wsConnect();
+}
+function manualSync(){
+  if(!API_URL){ toast('ok','Running local-only — no server configured. Add one in Settings to enable sync.'); return; }
+  toast('ok','Syncing from server...');
+  _syncFromServer();
+}
+
+
+
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('./sw.js').catch(function(e){
+      // Expected in preview/sandbox environments where sw.js isn't hosted next to index.html.
+      // On a real static host (all files in the same folder) this succeeds normally.
+      console.info('Service worker not available in this environment — offline install will work once deployed with all files together.');
+    });
+  });
+}
+</script>
+</body></html>
